@@ -1,232 +1,101 @@
-/* --- BIẾN TOÀN CỤC --- */
 :root {
     --bg: #050505;
-    --text: #00ff41;    /* Green Terminal */
-    --accent: #ff003c;  /* Cyber Red */
-    --border-color: #333;
+    --text: #00ff41; 
+    --accent: #ff003c; 
     --font-mono: 'Courier New', Courier, monospace;
 }
 
-/* --- RESET & CƠ BẢN --- */
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-}
-
-html { 
-    scroll-behavior: smooth; 
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 
 body {
     background-color: var(--bg);
     color: var(--text);
     font-family: var(--font-mono);
-    overflow-x: hidden;
-    padding-bottom: 50px;
     line-height: 1.6;
 }
 
-/* --- HIỆU ỨNG MÀN HÌNH CRT (SCANLINES) --- */
+/* Scanlines Effect */
 .scanlines {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 255, 0, 0.06));
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
     background-size: 100% 4px, 3px 100%;
-    z-index: 9999; 
-    pointer-events: none;
+    z-index: 9999; pointer-events: none;
 }
 
-/* --- SYSTEM BOOT LOADER (LOADING SCREEN) --- */
+/* Boot Loader */
 #boot-loader {
-    position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background-color: var(--bg);
-    z-index: 100000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: var(--bg); z-index: 100000;
+    display: flex; justify-content: center; align-items: center; padding: 20px;
 }
-
 .boot-container { width: 100%; max-width: 600px; }
+.boot-header { border-bottom: 1px solid var(--text); color: var(--accent); margin-bottom: 15px; font-weight: bold; }
+.boot-log { height: 120px; overflow: hidden; font-size: 0.8rem; display: flex; flex-direction: column; justify-content: flex-end; margin-bottom: 20px; }
+.boot-progress-bar { height: 15px; border: 1px solid var(--text); padding: 2px; margin: 10px 0; }
+#boot-fill { height: 100%; width: 0%; background: var(--text); }
+.loaded-complete { opacity: 0; pointer-events: none; transition: 0.8s ease; }
 
-.boot-header {
-    border-bottom: 1px solid var(--text);
-    margin-bottom: 20px;
-    padding-bottom: 5px;
-    font-weight: bold;
-    color: var(--accent);
-}
-
-.boot-log {
-    height: 150px;
-    overflow: hidden;
-    margin-bottom: 20px;
-    font-size: 0.85rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-}
-
-.boot-progress-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-weight: bold;
-}
-
-.boot-progress-bar {
-    flex-grow: 1;
-    height: 18px;
-    border: 1px solid var(--text);
-    padding: 2px;
-}
-
-#boot-fill {
-    height: 100%;
-    width: 0%;
-    background-color: var(--text);
-}
-
-.loaded-complete {
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.6s ease-out;
-}
-
-/* --- NAVIGATION --- */
+/* Navigation */
 .system-nav {
-    display: flex; 
-    justify-content: space-between; 
-    padding: 20px;
-    border-bottom: 2px solid var(--text); 
-    position: sticky; 
-    top: 0;
-    background: var(--bg); 
-    z-index: 100;
+    display: flex; justify-content: space-between; padding: 20px;
+    border-bottom: 2px solid var(--text); position: sticky; top: 0; background: var(--bg); z-index: 100;
+}
+.cmd-btn { background: var(--text); color: var(--bg); border: none; padding: 5px 12px; cursor: pointer; font-weight: bold; font-family: var(--font-mono); }
+
+/* Main Container */
+.terminal-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
+.console-block { margin-bottom: 80px; }
+.cmd-line { color: var(--accent); font-weight: bold; margin-bottom: 20px; }
+
+/* Hero Glitch Effect */
+h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); position: relative; }
+.glitch-text::before, .glitch-text::after {
+    content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
+}
+.glitch-text:hover::before { animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite; color: var(--accent); z-index: -1; }
+@keyframes glitch {
+    0% { transform: translate(0); }
+    20% { transform: translate(-3px, 3px); }
+    40% { transform: translate(-3px, -3px); }
+    60% { transform: translate(3px, 3px); }
+    80% { transform: translate(3px, -3px); }
+    100% { transform: translate(0); }
 }
 
-.logo { font-weight: bold; font-size: 1.2rem; }
-.cmd-btn {
-    background: var(--text); 
-    color: var(--bg); 
-    border: none;
-    padding: 5px 15px; 
-    font-family: var(--font-mono); 
-    font-weight: bold;
-    cursor: pointer;
-}
+/* Skills Grid - Optimized for 4 items */
+.brutal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); border: 1px solid var(--text); }
+.skill-box { padding: 25px; border: 1px solid var(--text); transition: 0.3s; }
+.skill-box:hover { background: var(--text); color: var(--bg); }
+.skill-box.highlight { border: 2px solid var(--accent); color: var(--accent); }
+.code-num { font-size: 0.7rem; display: block; margin-bottom: 5px; opacity: 0.7; }
 
-/* --- LAYOUT & SECTIONS --- */
-.terminal-container { 
-    max-width: 1000px; 
-    margin: 0 auto; 
-    padding: 60px 20px; 
-}
-
-.console-block { margin-bottom: 100px; }
-.cmd-line { color: var(--accent); margin-bottom: 20px; font-weight: bold; }
-
-h1 { 
-    font-size: clamp(2rem, 8vw, 3.5rem); 
-    margin-bottom: 15px; 
-    border-left: 10px solid var(--text); 
-    padding-left: 20px; 
-    text-transform: uppercase;
-}
-
-.slogan-box { font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8; font-style: italic; }
-
-/* --- SKILLS GRID --- */
-.brutal-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
-    border: 1px solid var(--text); 
-}
-
-.skill-box { 
-    padding: 35px; 
-    border: 1px solid var(--text); 
-    transition: 0.2s; 
-}
-
-.skill-box:hover { 
-    background: var(--text); 
-    color: var(--bg); 
-}
-
-.skill-box.highlight { 
-    border: 2px solid var(--accent); 
-    color: var(--accent); 
-}
-
-.code-num { font-size: 0.7rem; display: block; margin-bottom: 10px; }
-
-/* --- PROJECT CARD --- */
-.project-brutal-card { border: 2px solid var(--text); margin-top: 20px; }
-.project-header { 
-    background: var(--text); 
-    color: var(--bg); 
-    padding: 10px; 
-    font-weight: bold; 
-}
-
+/* Project Card */
+.project-brutal-card { border: 2px solid var(--text); }
+.project-header { background: var(--text); color: var(--bg); padding: 8px 15px; font-weight: bold; }
 .project-body { display: flex; flex-wrap: wrap; }
-.project-img-wrapper { 
-    flex: 1 1 400px; 
-    border-right: 1px solid var(--text); 
-    filter: grayscale(1) contrast(1.2); 
-}
-
-.project-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-.project-desc { flex: 1 1 300px; padding: 30px; }
-
-.launch-btn {
-    display: inline-block; 
-    margin-top: 25px; 
-    padding: 15px;
-    border: 2px solid var(--text); 
-    color: var(--text); 
-    text-decoration: none;
-    font-weight: bold; 
-    width: 100%; 
-    text-align: center;
-    transition: 0.2s;
-}
-
+.project-img-wrapper { flex: 1 1 400px; border-right: 1px solid var(--text); filter: grayscale(1); }
+.project-img-wrapper img { width: 100%; height: auto; display: block; }
+.project-desc { flex: 1 1 300px; padding: 25px; }
+.launch-btn { display: block; text-align: center; padding: 15px; border: 2px solid var(--text); color: var(--text); text-decoration: none; margin-top: 20px; font-weight: bold; }
 .launch-btn:hover { background: var(--text); color: var(--bg); }
 
-/* --- CONTACT SECTION --- */
-.contact-terminal {
-    border: 1px dashed var(--text);
-    padding: 30px;
-    background: rgba(0, 255, 65, 0.03);
-}
-
-.contact-row { margin-bottom: 15px; display: flex; gap: 20px; }
-.contact-row .label { color: var(--accent); font-weight: bold; min-width: 80px; }
-.contact-row .value { color: var(--text); text-decoration: none; border-bottom: 1px solid transparent; }
-.contact-row a.value:hover { background: var(--text); color: var(--bg); }
-.status-blink .value { animation: blink 1.5s step-end infinite; }
-
+/* Contact */
+.contact-terminal { border: 1px dashed var(--text); padding: 25px; background: rgba(0,255,65,0.03); }
+.contact-row { margin-bottom: 10px; display: flex; gap: 15px; }
+.label { color: var(--accent); font-weight: bold; }
+.value { color: var(--text); text-decoration: none; }
+.status-blink { animation: blink 1s step-end infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* --- SYSTEM FOOTER --- */
-.system-footer { 
-    text-align: center; 
-    padding: 60px 20px; 
-    border-top: 1px solid #222; 
-    font-size: 0.8rem; 
-    opacity: 0.6;
-}
+/* Footer */
+.system-footer { text-align: center; padding: 40px; border-top: 1px solid #222; font-size: 0.8rem; opacity: 0.6; }
 
-/* --- LANGUAGE LOGIC --- */
-body.lang-vi .content-en { display: none !important; }
-body.lang-en .content-vi { display: none !important; }
+/* Lang Logic */
+body.lang-vi .content-en { display: none; }
+body.lang-en .content-vi { display: none; }
 
-/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .project-img-wrapper { border-right: none; border-bottom: 1px solid var(--text); }
-    h1 { border-left-width: 6px; }
 }
