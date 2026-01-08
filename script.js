@@ -63,14 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
         typeWriterEffect();
     });
 
-    // --- 3. NEW: MOUSE GLOW FOLLOWER ---
+    // --- 3. MOUSE GLOW FOLLOWER ---
     const glow = document.getElementById('cursor-glow');
     document.addEventListener('mousemove', (e) => {
         glow.style.left = e.clientX + 'px';
         glow.style.top = e.clientY + 'px';
     });
 
-    // --- 4. NEW: SCROLL REVEAL ANIMATION ---
+    // --- 4. SCROLL REVEAL ANIMATION ---
     const hiddenElements = document.querySelectorAll('.hidden-section');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -78,31 +78,41 @@ document.addEventListener('DOMContentLoaded', () => {
                 entry.target.classList.add('show-section');
             }
         });
-    }, { threshold: 0.1 }); // Hiện khi thấy 10%
+    }, { threshold: 0.1 }); 
 
     hiddenElements.forEach((el) => observer.observe(el));
 
-    // --- 5. NEW: TYPEWRITER EFFECT FOR SLOGAN ---
+    // --- 5. FIXED: TYPEWRITER EFFECT (LOGIC MỚI) ---
+    // Khai báo biến toàn cục để kiểm soát timeout
+    let typingTimeout; 
+
     function typeWriterEffect() {
-        const isEnglish = body.classList.contains('lang-en');
-        const targetClass = isEnglish ? '.content-en' : '.content-vi';
-        const sloganElement = document.querySelector(`.slogan-box ${targetClass}`);
+        const sloganElement = document.getElementById('slogan-text');
+        const isEnglish = document.body.classList.contains('lang-en');
         
-        if (!sloganElement) return;
-
-        // Reset text
-        const fullText = sloganElement.getAttribute('data-type');
-        sloganElement.innerText = ''; 
-        sloganElement.style.display = 'inline'; // Đảm bảo nó hiện ra để gõ
-
+        // Nội dung slogan
+        const textVi = '"Không có đường tắt nào dẫn đến thành công."';
+        const textEn = '"There\'s no shortcut to success."';
+        
+        const textToType = isEnglish ? textEn : textVi;
+        
+        // 1. Dừng ngay lập tức việc gõ cũ nếu có (Fix lỗi dính chữ)
+        if (typingTimeout) clearTimeout(typingTimeout);
+        
+        // 2. Xóa sạch chữ cũ
+        sloganElement.innerText = '';
+        
+        // 3. Chạy hàm đệ quy mới
         let i = 0;
         function type() {
-            if (i < fullText.length) {
-                sloganElement.innerText += fullText.charAt(i);
+            if (i < textToType.length) {
+                sloganElement.innerText += textToType.charAt(i);
                 i++;
-                setTimeout(type, 50); // Tốc độ gõ
+                // Gán timeout vào biến toàn cục để có thể clear sau này
+                typingTimeout = setTimeout(type, 50); 
             }
         }
+        
         type();
     }
 });
