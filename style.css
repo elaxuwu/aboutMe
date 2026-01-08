@@ -14,6 +14,7 @@ body {
     font-family: var(--font-mono);
     line-height: 1.6;
     cursor: crosshair; /* Đổi con trỏ chuột thành hình dấu cộng */
+    overflow-x: hidden;
 }
 
 /* NEW: Mouse Glow Effect */
@@ -96,7 +97,29 @@ h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); position: relative; text-shadow: 2px
     100% { transform: translate(0); }
 }
 
-.slogan-box { font-size: 1.2rem; min-height: 1.6em; color: #fff; opacity: 0.9; margin-bottom: 20px; }
+/* FIXED: Slogan Box & Cursor */
+.slogan-box {
+    font-size: 1.2rem;
+    min-height: 1.6em; /* Giữ chiều cao cố định */
+    color: #fff;
+    opacity: 0.9;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+.cursor {
+    display: inline-block;
+    color: var(--accent);
+    animation: blink 1s step-end infinite;
+    margin-left: 5px;
+    font-weight: bold;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
 
 /* Skills Grid */
 .brutal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); border: 1px solid var(--text); }
