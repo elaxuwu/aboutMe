@@ -167,3 +167,57 @@ body.lang-en .content-vi { display: none; }
 @media (max-width: 768px) {
     .project-img-wrapper { border-right: none; border-bottom: 1px solid var(--text); }
 }
+
+/* --- ADDITION FOR REPORT PAGE --- */
+
+.report-container {
+    border: 1px solid var(--text);
+    padding: 10px;
+    font-family: var(--font-mono);
+    margin-bottom: 40px;
+    background: rgba(0, 255, 65, 0.02);
+}
+
+.report-header {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr; /* Chia cột: Tên môn - Điểm - Đánh giá */
+    border-bottom: 2px solid var(--text);
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.report-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 2fr;
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
+    transition: 0.2s;
+}
+
+.report-row:hover {
+    background: var(--text);
+    color: var(--bg);
+    cursor: default;
+}
+
+.note-box {
+    border: 1px solid var(--accent);
+    padding: 20px;
+    color: #fff;
+    min-height: 100px;
+    background: rgba(255, 0, 60, 0.05);
+}
+
+/* Responsive cho bảng trên mobile */
+@media (max-width: 600px) {
+    .report-header, .report-row {
+        grid-template-columns: 1fr 1fr; /* Ẩn cột đánh giá hoặc gộp */
+        font-size: 0.8rem;
+    }
+    .report-header .col:nth-child(3), 
+    .report-row .col:nth-child(3) {
+        display: none; /* Tạm ẩn cột đánh giá trên mobile nếu chật */
+    }
+}
