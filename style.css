@@ -1,0 +1,87 @@
+/* --- PHONG CÁCH CYBER-BRUTALISM --- */
+:root {
+    --bg: #050505;
+    --text: #00ff41; /* Màu xanh terminal truyền thống */
+    --accent: #ff003c; /* Màu đỏ highlight */
+    --border-color: #333;
+    --font-mono: 'Courier New', Courier, monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-mono);
+    overflow-x: hidden;
+    padding-bottom: 50px;
+}
+
+/* Hiệu ứng Scanline (Màn hình cũ) */
+.scanlines {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 4px, 3px 100%;
+    z-index: 9999; pointer-events: none;
+}
+
+/* Nav */
+.system-nav {
+    display: flex; justify-content: space-between; padding: 20px;
+    border-bottom: 2px solid var(--text); position: sticky; top: 0;
+    background: var(--bg); z-index: 100;
+}
+
+.cmd-btn {
+    background: var(--text); color: var(--bg); border: none;
+    padding: 5px 15px; font-family: var(--font-mono); font-weight: bold;
+    cursor: pointer;
+}
+
+/* Container */
+.terminal-container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+
+.console-block { margin-bottom: 80px; }
+.cmd-line { color: var(--accent); margin-bottom: 20px; font-weight: bold; }
+
+/* Typography */
+h1 { font-size: 3.5rem; line-height: 1; margin-bottom: 10px; border-left: 10px solid var(--text); padding-left: 20px; }
+.slogan-box { font-size: 1.2rem; margin-bottom: 20px; opacity: 0.8; }
+
+/* Brutal Skills Grid */
+.brutal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0; border: 1px solid var(--text); }
+.skill-box { padding: 30px; border: 1px solid var(--text); transition: 0.2s; }
+.skill-box:hover { background: var(--text); color: var(--bg); }
+.skill-box.highlight { border: 2px solid var(--accent); color: var(--accent); }
+.code-num { font-size: 0.8rem; display: block; margin-bottom: 10px; }
+
+/* Project Card */
+.project-brutal-card { border: 2px solid var(--text); background: #0a0a0a; }
+.project-header { background: var(--text); color: var(--bg); padding: 10px; font-weight: bold; display: flex; align-items: center; }
+.status-dot { width: 10px; height: 10px; background: var(--bg); display: inline-block; margin-right: 10px; border-radius: 50%; }
+
+.project-body { display: flex; flex-wrap: wrap; }
+.project-img-wrapper { flex: 1 1 400px; border-right: 1px solid var(--text); filter: grayscale(1); transition: 0.3s; }
+.project-img-wrapper:hover { filter: grayscale(0); }
+.project-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+.project-desc { flex: 1 1 300px; padding: 30px; }
+
+.launch-btn {
+    display: inline-block; margin-top: 20px; padding: 15px;
+    border: 2px solid var(--text); color: var(--text); text-decoration: none;
+    font-weight: bold; width: 100%; text-align: center;
+}
+.launch-btn:hover { background: var(--text); color: var(--bg); }
+
+.tag { color: var(--accent); display: block; margin-bottom: 10px; }
+
+.system-footer { text-align: center; padding: 40px; border-top: 1px solid #222; font-size: 0.8rem; }
+
+/* Language Logic */
+body.lang-vi .content-en { display: none; }
+body.lang-en .content-vi { display: none; }
+
+@media (max-width: 768px) {
+    h1 { font-size: 2rem; }
+}
