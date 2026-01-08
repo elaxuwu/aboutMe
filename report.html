@@ -56,20 +56,192 @@
             <div class="cmd-line">>> RENDER TABLE --verbose</div>
             
             <div class="report-container">
-                <div class="report-header">
-                    <div class="col">SUBJECT_ID</div>
-                    <div class="col">SCORE</div>
-                    <div class="col">EVALUATION</div>
-                </div>
-                
-                <div id="academic-data-placeholder">
-                    <div class="report-row">
-                        <div class="col">...WAITING FOR DATA INPUT...</div>
-                        <div class="col">--</div>
-                        <div class="col">--</div>
-                    </div>
-                </div>
-            </div>
+    <div class="report-header">
+        <div class="col">SUBJECT (CLICK TO EXPAND)</div>
+        <div class="col">AVG_SCORE</div>
+        <div class="col">STATUS</div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> TOÁN (MATH)</div>
+        <div class="col text-highlight">8.8</div>
+        <div class="col">GIỎI (EXCELLENT)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.5</div>
+            <div class="d-item">TX2: 9.0</div>
+            <div class="d-item">TX3: 7.5</div>
+            <div class="d-item">TX4: 7.6</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.5</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> VẬT LÝ (PHYSICS)</div>
+        <div class="col text-highlight">8.2</div>
+        <div class="col">KHÁ (GOOD)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.0</div>
+            <div class="d-item">TX2: 7.0</div>
+            <div class="d-item">TX3: 8.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 7.3</div>
+            <div class="d-item highlight">CUỐI KỲ: 9.1</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> HÓA HỌC (CHEMISTRY)</div>
+        <div class="col text-highlight">9.7</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 9.3</div>
+            <div class="d-item highlight">CUỐI KỲ: 10.0</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> SINH HỌC (BIOLOGY)</div>
+        <div class="col text-highlight">9.1</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.0</div>
+            <div class="d-item">TX2: 9.2</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.3</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> CÔNG NGHỆ TT (IT)</div>
+        <div class="col text-highlight">9.1</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 8.3</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 9.2</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.8</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> NGỮ VĂN (LITERATURE)</div>
+        <div class="col text-highlight">7.9</div>
+        <div class="col">KHÁ (GOOD)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 7.5</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 7.5</div>
+            <div class="d-item">TX4: 8.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 8.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 7.5</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)" style="border-left: 3px solid var(--accent);">
+        <div class="col"><span class="expand-icon">[+]</span> LỊCH SỬ (HISTORY)</div>
+        <div class="col text-highlight" style="color: var(--accent);">10.0</div>
+        <div class="col" style="color: var(--accent);">PERFECT SCORE</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 10.0</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> TIẾNG ANH (ENGLISH)</div>
+        <div class="col text-highlight">9.0</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 9.2</div>
+            <div class="d-item">TX3: 8.9</div>
+            <div class="d-item">TX4: 9.4</div>
+            <div class="d-item highlight">PROG.TEST: 8.8</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.5</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> KH. MÁY TÍNH (CS)</div>
+        <div class="col text-highlight">9.6</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 9.5</div>
+            <div class="d-item highlight">GIỮA KỲ: 9.4</div>
+            <div class="d-item highlight">CUỐI KỲ: 9.5</div>
+        </div>
+    </div>
+    
+     <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> GDQP - AN NINH</div>
+        <div class="col text-highlight">9.6</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 9.0</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> CÁC MÔN KHÁC (OTHERS)</div>
+        <div class="col">--</div>
+        <div class="col">ĐẠT (PASSED)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">THỂ CHẤT: ĐẠT</div>
+            <div class="d-item">GD ĐỊA PHƯƠNG: ĐẠT</div>
+            <div class="d-item">TRẢI NGHIỆM: ĐẠT</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="teacher-notes hidden-section">
+    <h3 class="cmd-line">>> DECRYPTING: teacher_comments.txt</h3>
+    <div class="note-box">
+        <p style="margin-bottom: 10px; color: var(--accent);">[GVCN_LOG]:</p>
+        <p class="typewriter-text">
+            "Thiên Bảo là một học sinh thông minh, hòa đồng. Em luôn chủ động tích cực tham gia vào các hoạt động. Em thể hiện quyết tâm phấn đấu để có được kết quả học tập xuất sắc trong hầu hết các môn học. Em làm việc nhóm hiệu quả và có nhiều đóng góp giá trị..."
+        </p>
+        <br>
+        <p style="color: var(--text); border-top: 1px dashed var(--text); padding-top:10px;">
+            >> ĐIỂM RÈN LUYỆN (VĂN MINH): <span style="color: var(--accent); font-weight: bold; font-size: 1.2rem;">99/100</span>
+        </p>
+    </div>
+</div>
 
             <div class="teacher-notes hidden-section">
                 <h3 class="cmd-line">>> CAT teacher_notes.txt</h3>
