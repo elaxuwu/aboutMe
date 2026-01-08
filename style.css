@@ -85,3 +85,50 @@ body.lang-en .content-vi { display: none; }
 @media (max-width: 768px) {
     h1 { font-size: 2rem; }
 }
+
+/* --- CONTACT TERMINAL STYLE --- */
+.contact-terminal {
+    border: 1px dashed var(--text);
+    padding: 30px;
+    background: rgba(0, 255, 65, 0.05);
+}
+
+.contact-row {
+    margin-bottom: 15px;
+    display: flex;
+    gap: 20px;
+}
+
+.contact-row .label {
+    color: var(--accent);
+    font-weight: bold;
+    min-width: 80px;
+}
+
+.contact-row .value {
+    color: var(--text);
+    text-decoration: none;
+    transition: 0.2s;
+    border-bottom: 1px solid transparent;
+}
+
+.contact-row a.value:hover {
+    background: var(--text);
+    color: var(--bg);
+}
+
+/* Hiệu ứng nháy (Blinking) cho Status */
+.status-blink .value {
+    animation: blink 1.5s step-end infinite;
+}
+
+@keyframes blink {
+    50% { opacity: 0; }
+}
+
+@media (max-width: 480px) {
+    .contact-row {
+        flex-direction: column;
+        gap: 5px;
+    }
+}
