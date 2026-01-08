@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
         "ESTABLISHING SECURE_CONNECTION...",
         "LOADING SKILLS_MODULE...",
         "SYSTEM CHECK: OK",
-        "ACCESS GRANTED: WELCOME TO MY E-PORTFOLIO"
+        "ACCESS GRANTED: WELCOME ADMINISTRATOR"
     ];
     
     const logBox = document.getElementById('boot-log');
