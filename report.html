@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACADEMIC_LOGS_HK1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="lang-en">
+
+    <div id="cursor-glow"></div>
+    <div class="crt-vignette"></div>
+
+    <div id="boot-loader">
+        <div class="boot-container">
+            <div class="boot-header">ELAX_SECURE_SERVER v1.0</div>
+            <div id="boot-log" class="boot-log"></div>
+            <div class="boot-progress-wrapper">
+                <span class="boot-label">DECRYPTING_DATA:</span>
+                <div class="boot-progress-bar">
+                    <div id="boot-fill"></div>
+                </div>
+                <span id="boot-percent">0%</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="scanlines"></div>
+
+    <nav class="system-nav">
+        <a href="index.html" class="logo" style="text-decoration: none; color: var(--text);">
+            << RETURN_ROOT
+        </a>
+        <div class="nav-controls">
+            <span class="system-status">SECURE_MODE</span>
+            <button id="lang-toggle" class="cmd-btn">MODE: EN</button>
+        </div>
+    </nav>
+
+    <main class="terminal-container">
+        <section class="console-block hero">
+            <div class="cmd-line">>> ACCESS FILE: academic_report_hk1.dat</div>
+            <h1 class="glitch-text" data-text="PARENT MEETING 1:1">
+                <span class="content-vi">HỌP PHỤ HUYNH 1:1</span>
+                <span class="content-en">1:1 PARENT MEETING</span>
+            </h1>
+            
+            <div class="slogan-box">
+                <span style="color: var(--accent);">TARGET:</span>&nbsp;
+                <span class="content-vi">Kết quả học tập Học Kỳ 1</span>
+                <span class="content-en">Semester 1 Academic Results</span>
+            </div>
+        </section>
+
+        <section class="console-block hidden-section">
+            <div class="cmd-line">>> RENDER TABLE --verbose</div>
+            
+            <div class="report-container">
+                <div class="report-header">
+                    <div class="col">SUBJECT_ID</div>
+                    <div class="col">SCORE</div>
+                    <div class="col">EVALUATION</div>
+                </div>
+                
+                <div id="academic-data-placeholder">
+                    <div class="report-row">
+                        <div class="col">...WAITING FOR DATA INPUT...</div>
+                        <div class="col">--</div>
+                        <div class="col">--</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="teacher-notes hidden-section">
+                <h3 class="cmd-line">>> CAT teacher_notes.txt</h3>
+                <div class="note-box">
+                    <span class="cursor">_</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="system-footer">
+        <p>[END_OF_FILE]</p>
+        <p>ENCRYPTED_BY: ELAX_OS // 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
