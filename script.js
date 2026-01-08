@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 loader.classList.add('loaded-complete');
                 setTimeout(() => loader.remove(), 800);
+                // Bắt đầu gõ chữ slogan sau khi boot xong
+                typeWriterEffect(); 
             }, 500);
         }
     }, 100);
@@ -56,5 +58,51 @@ document.addEventListener('DOMContentLoaded', () => {
         // System flash effect
         body.style.opacity = "0.7";
         setTimeout(() => body.style.opacity = "1", 50);
+        
+        // Gõ lại slogan khi đổi ngôn ngữ
+        typeWriterEffect();
     });
+
+    // --- 3. NEW: MOUSE GLOW FOLLOWER ---
+    const glow = document.getElementById('cursor-glow');
+    document.addEventListener('mousemove', (e) => {
+        glow.style.left = e.clientX + 'px';
+        glow.style.top = e.clientY + 'px';
+    });
+
+    // --- 4. NEW: SCROLL REVEAL ANIMATION ---
+    const hiddenElements = document.querySelectorAll('.hidden-section');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('show-section');
+            }
+        });
+    }, { threshold: 0.1 }); // Hiện khi thấy 10%
+
+    hiddenElements.forEach((el) => observer.observe(el));
+
+    // --- 5. NEW: TYPEWRITER EFFECT FOR SLOGAN ---
+    function typeWriterEffect() {
+        const isEnglish = body.classList.contains('lang-en');
+        const targetClass = isEnglish ? '.content-en' : '.content-vi';
+        const sloganElement = document.querySelector(`.slogan-box ${targetClass}`);
+        
+        if (!sloganElement) return;
+
+        // Reset text
+        const fullText = sloganElement.getAttribute('data-type');
+        sloganElement.innerText = ''; 
+        sloganElement.style.display = 'inline'; // Đảm bảo nó hiện ra để gõ
+
+        let i = 0;
+        function type() {
+            if (i < fullText.length) {
+                sloganElement.innerText += fullText.charAt(i);
+                i++;
+                setTimeout(type, 50); // Tốc độ gõ
+            }
+        }
+        type();
+    }
 });
