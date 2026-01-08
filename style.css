@@ -132,3 +132,81 @@ body.lang-en .content-vi { display: none; }
         gap: 5px;
     }
 }
+/* --- BOOT LOADER SYSTEM --- */
+#boot-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--bg);
+    z-index: 99999; /* Luôn nằm trên cùng */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-mono);
+    padding: 20px;
+}
+
+.boot-container {
+    width: 100%;
+    max-width: 600px;
+}
+
+.boot-header {
+    border-bottom: 1px solid var(--text);
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    font-weight: bold;
+    color: var(--accent);
+}
+
+.boot-log {
+    height: 150px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    color: var(--text);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Luôn hiện dòng mới nhất ở dưới */
+}
+
+.log-line {
+    display: block;
+}
+
+.boot-progress-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: bold;
+}
+
+.boot-progress-bar {
+    flex-grow: 1;
+    height: 20px;
+    border: 2px solid var(--text);
+    padding: 2px;
+}
+
+#boot-fill {
+    height: 100%;
+    width: 0%;
+    background-color: var(--text);
+    transition: width 0.1s linear;
+}
+
+#boot-percent {
+    min-width: 40px;
+    text-align: right;
+    color: var(--accent);
+}
+
+/* Class để ẩn loader sau khi chạy xong */
+.loaded-complete {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out;
+}
