@@ -1,7 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
-    // --- 1. HIỆU ỨNG BOOT LOADER (LOADING SCREEN) ---
-    const bootLogs = [
+    // --- 1. BOOT SEQUENCE ---
+    const logData = [
         "LOADING ELAX_OS_KERNEL...",
         "MOUNTING VIRTUAL_DRIVE/PROJECTS...",
         "INITIALIZING GRAPHICS_ADAPTER...",
@@ -11,74 +10,51 @@ document.addEventListener('DOMContentLoaded', () => {
         "ACCESS GRANTED: WELCOME TO MY E-PORTFOLIO"
     ];
     
-    const logContainer = document.getElementById('boot-log');
-    const progressBar = document.getElementById('boot-fill');
-    const percentText = document.getElementById('boot-percent');
+    const logBox = document.getElementById('boot-log');
+    const fill = document.getElementById('boot-fill');
+    const percent = document.getElementById('boot-percent');
     const loader = document.getElementById('boot-loader');
     
-    let progress = 0;
-    let logIndex = 0;
+    let p = 0;
+    let lIndex = 0;
 
-    function addLog(text) {
-        const line = document.createElement('div');
-        line.style.marginBottom = "4px";
-        line.innerText = `> ${text}`;
-        logContainer.appendChild(line);
-    }
-
-    // Giả lập tiến trình tải
-    const bootInterval = setInterval(() => {
-        progress += Math.floor(Math.random() * 8) + 2; 
+    const interval = setInterval(() => {
+        p += Math.floor(Math.random() * 7) + 2;
+        if (p > 100) p = 100;
         
-        if (progress >= 100) {
-            progress = 100;
-            clearInterval(bootInterval);
-            
-            // Hiện log cuối và tắt loader
-            addLog(bootLogs[bootLogs.length - 1]);
+        fill.style.width = p + "%";
+        percent.innerText = p + "%";
+
+        if (p > (lIndex * 15) && lIndex < logData.length) {
+            const line = document.createElement('div');
+            line.innerText = "> " + logData[lIndex];
+            logBox.appendChild(line);
+            lIndex++;
+        }
+
+        if (p >= 100) {
+            clearInterval(interval);
             setTimeout(() => {
                 loader.classList.add('loaded-complete');
-                setTimeout(() => loader.remove(), 600);
-            }, 800);
+                setTimeout(() => loader.remove(), 800);
+            }, 500);
         }
-        
-        progressBar.style.width = `${progress}%`;
-        percentText.innerText = `${progress}%`;
+    }, 100);
 
-        // Đẩy log ra màn hình dựa theo %
-        const triggerPoint = Math.floor(100 / bootLogs.length);
-        if (progress > (logIndex * triggerPoint) && logIndex < bootLogs.length - 1) {
-            addLog(bootLogs[logIndex]);
-            logIndex++;
-        }
-    }, 120);
-
-
-    // --- 2. LOGIC CHUYỂN ĐỔI NGÔN NGỮ ---
+    // --- 2. LANGUAGE SWITCHER ---
     const langBtn = document.getElementById('lang-toggle');
     const body = document.body;
 
     langBtn.addEventListener('click', () => {
-        if (body.classList.contains('lang-vi')) {
-            // Sang English
-            body.classList.remove('lang-vi');
-            body.classList.add('lang-en');
-            langBtn.textContent = 'MODE: EN';
+        if (body.classList.contains('lang-en')) {
+            body.classList.replace('lang-en', 'lang-vi');
+            langBtn.innerText = "MODE: VI";
         } else {
-            // Sang Tiếng Việt
-            body.classList.remove('lang-en');
-            body.classList.add('lang-vi');
-            langBtn.textContent = 'MODE: VI';
+            body.classList.replace('lang-vi', 'lang-en');
+            langBtn.innerText = "MODE: EN";
         }
-        
-        // Hiệu ứng "glitch" nhẹ khi chuyển vùng dữ liệu
-        body.style.filter = 'invert(1)';
-        setTimeout(() => {
-            body.style.filter = 'none';
-        }, 80);
+        // System flash effect
+        body.style.opacity = "0.7";
+        setTimeout(() => body.style.opacity = "1", 50);
     });
-
-    // --- 3. CONSOLE LOG TRICK (Dành cho nhà tuyển dụng xem Inspect Element) ---
-    console.log("%c SYSTEM ACCESS: DO NGOC THIEN BAO ", "background: #00ff41; color: #000; font-weight: bold;");
-    console.log("Status: Looking for new challenges.");
 });
