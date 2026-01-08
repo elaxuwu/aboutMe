@@ -119,3 +119,20 @@ document.addEventListener('DOMContentLoaded', () => {
         type();
     }
 });
+
+// --- 6. REPORT PAGE LOGIC (TOGGLE DETAILS) ---
+function toggleDetail(element) {
+    // 1. Toggle class active cho dòng được click
+    element.classList.toggle('active');
+
+    // 2. Tìm dòng detail ngay phía sau nó
+    const detailRow = element.nextElementSibling;
+
+    if (detailRow.style.maxHeight) {
+        // Nếu đang mở thì đóng lại
+        detailRow.style.maxHeight = null;
+    } else {
+        // Nếu đang đóng thì mở ra (gán chiều cao bằng chiều cao nội dung)
+        detailRow.style.maxHeight = detailRow.scrollHeight + "px";
+    }
+}
