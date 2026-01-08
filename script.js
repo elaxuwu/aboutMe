@@ -88,6 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function typeWriterEffect() {
         const sloganElement = document.getElementById('slogan-text');
+        
+        if (!sloganElement) return;
+        
         const isEnglish = document.body.classList.contains('lang-en');
         
         // Nội dung slogan
