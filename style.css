@@ -290,3 +290,60 @@ body.lang-en .content-vi { display: none; }
     background: rgba(0, 255, 65, 0.15);
     color: #fff;
 }
+
+/* --- ZALO APP PAGE STYLES --- */
+
+.log-container {
+    border: 1px solid var(--text);
+    background: rgba(0, 0, 0, 0.5);
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+}
+
+.log-header {
+    display: grid;
+    grid-template-columns: 120px 100px 1fr;
+    background: var(--text);
+    color: var(--bg);
+    padding: 8px 15px;
+    font-weight: bold;
+    border-bottom: 1px solid var(--text);
+}
+
+.log-entry {
+    display: grid;
+    grid-template-columns: 120px 100px 1fr;
+    padding: 12px 15px;
+    border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
+    transition: 0.2s;
+}
+
+.log-entry:hover {
+    background: rgba(0, 255, 65, 0.05);
+}
+
+.log-ver {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.tag-new {
+    background: var(--accent);
+    color: #fff;
+    padding: 2px 6px;
+    font-size: 0.7rem;
+    margin-right: 8px;
+    border-radius: 2px;
+}
+
+/* Responsive cho log trên mobile */
+@media (max-width: 600px) {
+    .log-header { display: none; } /* Ẩn header trên mobile cho gọn */
+    .log-entry {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        padding: 15px;
+        border-bottom: 1px solid var(--text);
+    }
+    .log-date { opacity: 0.7; font-size: 0.75rem; }
+}
