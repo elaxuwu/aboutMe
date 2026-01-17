@@ -364,14 +364,15 @@ body.lang-en .content-vi { display: none; }
 
 /* 2. Khung ảnh phong cách Cyberpunk */
 .hero-avatar-wrapper {
-    flex-shrink: 0; /* Không cho ảnh bị co lại */
+    flex-shrink: 0;
     text-align: center;
     position: relative;
 }
 
 .avatar-frame {
-    width: 180px;
-    height: 180px;
+    /* CHANGED FROM 180px TO 120px */
+    width: 120px;
+    height: 120px;
     border: 2px solid var(--text);
     padding: 4px;
     position: relative;
@@ -437,19 +438,37 @@ body.lang-en .content-vi { display: none; }
 
 /* 5. Responsive cho điện thoại (Ảnh nhảy lên trên hoặc xuống dưới) */
 @media (max-width: 768px) {
+
     .hero-layout {
-        flex-direction: column-reverse; /* Đưa ảnh lên trên text hoặc ngược lại */
+
+        flex-direction: column-reverse;
+
         text-align: center;
+
         gap: 20px;
-    }
-    
-    .hero-avatar-wrapper {
-        margin-bottom: 20px;
+
     }
 
-    .avatar-frame {
-        width: 150px;
-        height: 150px;
-        margin: 0 auto; /* Căn giữa ảnh */
+    
+
+    .hero-avatar-wrapper {
+
+        margin-bottom: 20px;
+
     }
+
+
+    .avatar-frame {
+
+        /* CHANGED FROM 150px TO 100px for Mobile */
+
+        width: 100px;
+
+        height: 100px;
+
+        margin: 0 auto;
+
+    }
+
+}
 }
