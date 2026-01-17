@@ -122,6 +122,13 @@
             background: var(--accent);
             color: #fff;
         }
+        .sys-info-bar {
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: var(--accent);
+    text-shadow: 0 0 5px var(--accent);
+}
+.separator { margin: 0 10px; opacity: 0.5; }
     </style>
 </head>
 <body class="lang-en"> <div id="cursor-glow"></div>
@@ -236,6 +243,11 @@
     </main>
 
     <footer class="system-footer">
+        <div class="sys-info-bar">
+            <span id="sys-time">TIME: --:--:--</span>
+            <span class="separator">|</span>
+            <span id="sys-battery">BATTERY: DETECTING...</span>
+        </div>
         <p>[ENCRYPTED_CHANNEL]</p>
         <p>TERMINAL_ID: SOCIAL_HUB // 2026</p>
     </footer>
