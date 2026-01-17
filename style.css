@@ -367,8 +367,8 @@ body.lang-en .content-vi { display: none; }
 
 .avatar-frame {
     /* SIÊU NHỎ: Chỉ 80px */
-    width: 67px; 
-    height: 67px;
+    width: 80px; 
+    height: 80px;
     border: 1px solid var(--text); /* Viền mảnh hơn cho hợp kích thước */
     padding: 2px;
     position: relative;
