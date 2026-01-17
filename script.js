@@ -183,7 +183,7 @@ interactiveElements.forEach(el => {
 
 // --- FEATURE 3: WASD KONAMI CODE ---
 // Sequence: W, W, S, S, A, D, A, D, B, A
-const cheatCode = ['w', 'w', 's', 's', 'a', 'd', 'a', 'd', 'b', 'a'];
+const cheatCode = ['w', 'w', 'a', 'a', 's', 's', 'd', 'd'];
 let cheatProgress = 0;
 
 document.addEventListener('keydown', (e) => {
