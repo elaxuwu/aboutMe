@@ -347,3 +347,109 @@ body.lang-en .content-vi { display: none; }
     }
     .log-date { opacity: 0.7; font-size: 0.75rem; }
 }
+
+/* --- HERO LAYOUT & AVATAR STYLES --- */
+
+/* 1. Chia bố cục: Text trái - Ảnh phải */
+.hero-layout {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.hero-text {
+    flex: 1; /* Text chiếm phần còn lại */
+}
+
+/* 2. Khung ảnh phong cách Cyberpunk */
+.hero-avatar-wrapper {
+    flex-shrink: 0; /* Không cho ảnh bị co lại */
+    text-align: center;
+    position: relative;
+}
+
+.avatar-frame {
+    width: 180px;
+    height: 180px;
+    border: 2px solid var(--text);
+    padding: 4px;
+    position: relative;
+    overflow: hidden;
+    background: rgba(0, 255, 65, 0.1);
+}
+
+/* 4 góc vuông trang trí cho khung ảnh */
+.avatar-frame::before {
+    content: '';
+    position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border: 2px solid transparent;
+    border-top-color: var(--accent);
+    border-bottom-color: var(--accent);
+    z-index: 2;
+    pointer-events: none;
+    clip-path: polygon(0 0, 15px 0, 15px 100%, 0 100%, 0 0, 100% 0, 100% 100%, 85% 100%, 85% 0);
+}
+
+/* 3. Xử lý ảnh (Filter xanh lá) */
+.avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Chuyển ảnh thật sang tông xanh lá/đen trắng */
+    filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(300%) contrast(1.2);
+    transition: 0.5s;
+    mix-blend-mode: hard-light;
+}
+
+/* Hover vào ảnh thì hiện màu thật (hoặc sáng hơn) */
+.avatar-frame:hover .avatar-img {
+    filter: grayscale(0%);
+    mix-blend-mode: normal;
+}
+
+/* 4. Hiệu ứng tia quét dọc (Scanning line) */
+.avatar-scanline {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 5px;
+    background: rgba(255, 255, 255, 0.7);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    animation: scanFace 3s linear infinite;
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+@keyframes scanFace {
+    0% { top: -10%; opacity: 0; }
+    10% { opacity: 0.8; }
+    90% { opacity: 0.8; }
+    100% { top: 110%; opacity: 0; }
+}
+
+.avatar-caption {
+    margin-top: 8px;
+    font-size: 0.7rem;
+    color: var(--text);
+    opacity: 0.7;
+    letter-spacing: 2px;
+}
+
+/* 5. Responsive cho điện thoại (Ảnh nhảy lên trên hoặc xuống dưới) */
+@media (max-width: 768px) {
+    .hero-layout {
+        flex-direction: column-reverse; /* Đưa ảnh lên trên text hoặc ngược lại */
+        text-align: center;
+        gap: 20px;
+    }
+    
+    .hero-avatar-wrapper {
+        margin-bottom: 20px;
+    }
+
+    .avatar-frame {
+        width: 150px;
+        height: 150px;
+        margin: 0 auto; /* Căn giữa ảnh */
+    }
+}
