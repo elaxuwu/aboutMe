@@ -136,3 +136,118 @@ function toggleDetail(element) {
         detailRow.style.maxHeight = detailRow.scrollHeight + "px";
     }
 }
+/* =========================================
+   ADD THIS TO THE BOTTOM OF YOUR SCRIPT.JS
+   ========================================= */
+
+// --- FEATURE 2: GENERATED SOUND EFFECTS (No files needed) ---
+// We use the Web Audio API to create beeps so you don't need .mp3 files
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(type) {
+    if (audioCtx.state === 'suspended') audioCtx.resume(); // Wake up audio engine
+    
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    if (type === 'hover') {
+        // High pitched short blip
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
+        gainNode.gain.setValueAtTime(0.05, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.05);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.05);
+    } else if (type === 'click') {
+        // Lower mechanical "clack"
+        osc.type = 'square';
+        osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+        gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.1);
+    }
+}
+
+// Attach sounds to all buttons and links
+const interactiveElements = document.querySelectorAll('button, a, .report-row');
+interactiveElements.forEach(el => {
+    el.addEventListener('mouseenter', () => playSound('hover'));
+    el.addEventListener('click', () => playSound('click'));
+});
+
+
+// --- FEATURE 3: WASD KONAMI CODE ---
+// Sequence: W, W, S, S, A, D, A, D, B, A
+const cheatCode = ['w', 'w', 's', 's', 'a', 'd', 'a', 'd', 'b', 'a'];
+let cheatProgress = 0;
+
+document.addEventListener('keydown', (e) => {
+    const key = e.key.toLowerCase();
+    
+    // Check if key matches the next required key in sequence
+    if (key === cheatCode[cheatProgress]) {
+        cheatProgress++;
+        
+        // If complete
+        if (cheatProgress === cheatCode.length) {
+            activateGodMode();
+            cheatProgress = 0; // Reset
+        }
+    } else {
+        cheatProgress = 0; // Reset if wrong key
+    }
+});
+
+function activateGodMode() {
+    playSound('click'); // Play sound
+    document.body.classList.toggle('god-mode'); // Toggle CSS class
+    
+    // Announce in console/alert
+    const cmdLine = document.querySelector('.cmd-line');
+    if(document.body.classList.contains('god-mode')) {
+        alert(">> SYSTEM OVERRIDE: GOD MODE ACTIVATED");
+        if(cmdLine) cmdLine.innerText = ">> ROOT_ACCESS_GRANTED";
+    } else {
+        if(cmdLine) cmdLine.innerText = ">> USER_MODE_RESTORED";
+    }
+}
+
+
+// --- FEATURE 4: LIVE SYSTEM STATS ---
+function updateSystemStats() {
+    // 1. Time Update
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+    document.getElementById('sys-time').innerText = `TIME: ${timeString}`;
+
+    // 2. Battery Update (Check if API is supported)
+    if ('getBattery' in navigator) {
+        navigator.getBattery().then(battery => {
+            const level = Math.floor(battery.level * 100);
+            const charging = battery.charging ? "[CHG]" : "[BAT]";
+            
+            // Color logic: Red if low, normal if high
+            const batEl = document.getElementById('sys-battery');
+            batEl.innerText = `PWR: ${level}% ${charging}`;
+            
+            if(level < 20 && !battery.charging) {
+                batEl.style.color = 'red';
+                batEl.classList.add('status-blink');
+            } else {
+                batEl.style.color = ''; // Reset
+                batEl.classList.remove('status-blink');
+            }
+        });
+    } else {
+        document.getElementById('sys-battery').innerText = "PWR: EXTERNAL";
+    }
+}
+
+// Run immediately and then every second
+updateSystemStats();
+setInterval(updateSystemStats, 1000);
