@@ -420,31 +420,3 @@ body.lang-en .content-vi { display: none; }
     white-space: pre-wrap; /* This forces the browser to render every space character */
 }
 
-/* --- NEW: SYSTEM STATS IN FOOTER --- */
-.sys-info-bar {
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: var(--accent);
-    text-shadow: 0 0 5px var(--accent);
-}
-.separator { margin: 0 10px; opacity: 0.5; }
-
-/* --- NEW: CHEAT CODE "GOD MODE" --- */
-/* When this class is added to body, colors change */
-body.god-mode {
-    --text: #00ffff;  /* Cyan */
-    --accent: #ff00ff; /* Magenta */
-    background-color: #0a000a;
-}
-
-/* Make the screen shake slightly in God Mode */
-body.god-mode .terminal-container {
-    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-}
-
-@keyframes shake {
-    10%, 90% { transform: translate3d(-1px, 0, 0); }
-    20%, 80% { transform: translate3d(2px, 0, 0); }
-    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-    40%, 60% { transform: translate3d(4px, 0, 0); }
-}
