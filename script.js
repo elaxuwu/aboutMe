@@ -204,16 +204,26 @@ document.addEventListener('keydown', (e) => {
 });
 
 function activateGodMode() {
-    playSound('click'); // Play sound
-    document.body.classList.toggle('god-mode'); // Toggle CSS class
+    playSound('click'); 
+    document.body.classList.toggle('god-mode'); 
     
-    // Announce in console/alert
     const cmdLine = document.querySelector('.cmd-line');
-    if(document.body.classList.contains('god-mode')) {
+    const isGod = document.body.classList.contains('god-mode');
+
+    if(isGod) {
         alert(">> SYSTEM OVERRIDE: GOD MODE ACTIVATED");
         if(cmdLine) cmdLine.innerText = ">> ROOT_ACCESS_GRANTED";
+        
+        // START THE RAIN
+        if(matrixInterval) clearInterval(matrixInterval);
+        matrixInterval = setInterval(drawMatrix, 50);
+
     } else {
         if(cmdLine) cmdLine.innerText = ">> USER_MODE_RESTORED";
+        
+        // STOP THE RAIN
+        clearInterval(matrixInterval);
+        ctx.clearRect(0,0,canvas.width, canvas.height); // Clear screen
     }
 }
 
@@ -251,3 +261,43 @@ function updateSystemStats() {
 // Run immediately and then every second
 updateSystemStats();
 setInterval(updateSystemStats, 1000);
+
+/* --- MATRIX RAIN LOGIC --- */
+const canvas = document.getElementById('matrix-bg');
+const ctx = canvas.getContext('2d');
+
+// Set canvas size
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+// Characters to rain down (Binary + Katakana + Hacker text)
+const matrixChars = "010101XYZ<>/\\|ELAX_DEV";
+const fontSize = 14;
+const columns = canvas.width / fontSize;
+const drops = [];
+
+// Initialize drops
+for(let x = 0; x < columns; x++) drops[x] = 1;
+
+let matrixInterval;
+
+function drawMatrix() {
+    // Semi-transparent black to create "trail" effect
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // Set text color (Cyan for God Mode)
+    ctx.fillStyle = "#00ffff"; 
+    ctx.font = fontSize + "px monospace";
+
+    for(let i = 0; i < drops.length; i++) {
+        const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        // Reset drop to top randomly
+        if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
