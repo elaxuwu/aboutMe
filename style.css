@@ -352,12 +352,13 @@ body.lang-en .content-vi { display: none; }
 
 /* --- COMPACT AVATAR STYLES --- */
 
+/* style.css */
 .hero-layout {
     display: flex;
-    justify-content: flex-start; /* Đẩy sát về bên trái */
+    justify-content: space-between; /* This pushes the Text to the left and Image to the right */
     align-items: flex-start;
-    gap: 25px; /* Khoảng cách vừa phải với chữ */
     margin-top: 15px;
+    width: 100%; /* Ensures the container spans the full width */
 }
 
 .hero-avatar-wrapper {
@@ -367,8 +368,8 @@ body.lang-en .content-vi { display: none; }
 
 .avatar-frame {
     /* SIÊU NHỎ: Chỉ 80px */
-    width: 80px; 
-    height: 80px;
+    width: 200px; 
+    height: 200px;
     border: 1px solid var(--text); /* Viền mảnh hơn cho hợp kích thước */
     padding: 2px;
     position: relative;
@@ -412,4 +413,9 @@ body.lang-en .content-vi { display: none; }
         width: 70px;
         height: 70px;
     }
+}
+
+/* style.css */
+#slogan-text {
+    white-space: pre-wrap; /* This forces the browser to render every space character */
 }
