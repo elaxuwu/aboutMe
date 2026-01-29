@@ -16,43 +16,62 @@
         }
 
         .social-node {
-            border: 1px solid var(--text);
-            padding: 20px;
             position: relative;
+            border: 1px solid rgba(0,255,65,0.35);
+            padding: 22px;
             text-decoration: none;
             color: var(--text);
-            transition: all 0.3s ease;
-            background: rgba(0, 255, 65, 0.02);
+            background:
+                linear-gradient(180deg, rgba(0,255,65,0.04), rgba(0,0,0,0.2)),
+                rgba(0,0,0,0.55);
+            backdrop-filter: blur(6px);
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            min-height: 180px;
+            min-height: 190px;
+            transition: 
+                transform 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
         }
 
-        /* Hiệu ứng góc cắt */
-        .social-node::after {
-            content: '';
+        /* inner glow */
+        .social-node::before {
+            content: "";
             position: absolute;
-            bottom: 0;
-            right: 0;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 0 0 20px 20px;
-            border-color: transparent transparent var(--text) transparent;
-            transition: 0.3s;
+            inset: 0;
+            border: 1px solid rgba(0,255,65,0.15);
+            pointer-events: none;
+        }
+
+        /* scanline */
+        .social-node::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(
+                transparent 0%,
+                rgba(255,255,255,0.03) 50%,
+                transparent 100%
+            );
+            background-size: 100% 4px;
+            opacity: 0.15;
+            pointer-events: none;
         }
 
         .social-node:hover {
-            background: rgba(0, 255, 65, 0.1);
-            transform: translateY(-5px);
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
+            transform: translateY(-8px) scale(1.01);
+            box-shadow:
+                0 0 0 1px rgba(0,255,65,0.4),
+                0 0 25px rgba(0,255,65,0.25),
+                inset 0 0 20px rgba(0,255,65,0.15);
         }
 
-        .social-node:hover::after {
-            border-color: transparent transparent var(--accent) transparent;
+        .social-node:hover::before {
+             box-shadow: inset 0 0 25px rgba(0,255,65,0.25);
         }
+
+
 
         .node-header {
             display: flex;
@@ -64,7 +83,8 @@
         }
 
         .node-icon {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
+            opacity: 0.9;
         }
 
         .node-id {
@@ -92,6 +112,9 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
+        }
+        .node-stats span {
+            white-space: nowrap;
         }
 
         .ping-val {
@@ -172,7 +195,7 @@
                     <div class="node-header">
                         <i class="fab fa-youtube node-icon"></i>
                         <div class="node-id">
-                            ID: YTB_BROADCAST<br>
+                            ID: YTB_DEVLOG<br>
                             STATUS: LIVE
                         </div>
                     </div>
@@ -183,6 +206,24 @@
                     <div class="node-stats">
                         <span>SIGNAL: <span class="ping-val">||||||||||</span> 100%</span>
                         <span>LATENCY: 12ms</span>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/@elaxendfield/" target="_blank" class="social-node yt hidden-section">
+                    <div class="node-header">
+                        <i class="fab fa-youtube node-icon"></i>
+                        <div class="node-id">
+                            ID: YTB_GAME<br>
+                            STATUS: LIVE
+                        </div>
+                    </div>
+                    <div>
+                        <span class="node-name">YouTube</span>
+                        <span class="node-handle">@ElaxEndfield</span>
+                    </div>
+                    <div class="node-stats">
+                        <span>SIGNAL: <span class="ping-val">||||||||||</span> 100%</span>
+                        <span>LATENCY: 67ms</span>
                     </div>
                 </a>
 
