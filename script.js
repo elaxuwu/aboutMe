@@ -1,5 +1,45 @@
+/* ==========================================================================
+   1. GLOBAL CONFIG & UTILITIES
+   (Variables/Functions accessed by HTML or across multiple scopes)
+   ========================================================================== */
+
+// Audio Context (Web Audio API)
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+// Matrix Rain Global Variables
+let canvas, ctx, columns, drops;
+let matrixInterval;
+const matrixChars = "010101XYZ<>/\\|ELAX_DEV";
+const fontSize = 14;
+
+// Typewriter Global Timeout
+let typingTimeout;
+
+/** * Report Page Logic (Must be global to work with onclick="toggleDetail(this)") 
+ */
+function toggleDetail(element) {
+    element.classList.toggle('active');
+    const detailRow = element.nextElementSibling;
+
+    if (detailRow.style.maxHeight) {
+        detailRow.style.maxHeight = null;
+    } else {
+        detailRow.style.maxHeight = detailRow.scrollHeight + "px";
+    }
+}
+
+/* ==========================================================================
+   2. MAIN INITIALIZATION
+   (Runs when the DOM is fully loaded)
+   ========================================================================== */
 document.addEventListener('DOMContentLoaded', () => {
-    // --- 1. BOOT SEQUENCE ---
+
+    // --- A. BOOT SEQUENCE ---
+    const logBox = document.getElementById('boot-log');
+    const fill = document.getElementById('boot-fill');
+    const percent = document.getElementById('boot-percent');
+    const loader = document.getElementById('boot-loader');
+    
     const logData = [
         "LOADING ELAX_OS_KERNEL...",
         "MOUNTING VIRTUAL_DRIVE/PROJECTS...",
@@ -9,68 +49,68 @@ document.addEventListener('DOMContentLoaded', () => {
         "SYSTEM CHECK: OK",
         "ACCESS GRANTED: WELCOME ADMINISTRATOR"
     ];
-    
-    const logBox = document.getElementById('boot-log');
-    const fill = document.getElementById('boot-fill');
-    const percent = document.getElementById('boot-percent');
-    const loader = document.getElementById('boot-loader');
-    
-    let p = 0;
-    let lIndex = 0;
 
-    const interval = setInterval(() => {
-        p += Math.floor(Math.random() * 7) + 2;
-        if (p > 100) p = 100;
-        
-        fill.style.width = p + "%";
-        percent.innerText = p + "%";
+    if (loader) {
+        let p = 0;
+        let lIndex = 0;
 
-        if (p > (lIndex * 15) && lIndex < logData.length) {
-            const line = document.createElement('div');
-            line.innerText = "> " + logData[lIndex];
-            logBox.appendChild(line);
-            lIndex++;
-        }
+        const interval = setInterval(() => {
+            p += Math.floor(Math.random() * 7) + 2;
+            if (p > 100) p = 100;
+            
+            fill.style.width = p + "%";
+            percent.innerText = p + "%";
 
-        if (p >= 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-                loader.classList.add('loaded-complete');
-                setTimeout(() => loader.remove(), 800);
-                // Bắt đầu gõ chữ slogan sau khi boot xong
-                typeWriterEffect(); 
-            }, 500);
-        }
-    }, 100);
+            if (p > (lIndex * 15) && lIndex < logData.length) {
+                const line = document.createElement('div');
+                line.innerText = "> " + logData[lIndex];
+                logBox.appendChild(line);
+                lIndex++;
+            }
 
-    // --- 2. LANGUAGE SWITCHER ---
+            if (p >= 100) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    loader.classList.add('loaded-complete');
+                    setTimeout(() => loader.remove(), 800);
+                    // Start slogan after boot
+                    typeWriterEffect(); 
+                }, 500);
+            }
+        }, 100);
+    }
+
+    // --- B. LANGUAGE SWITCHER ---
     const langBtn = document.getElementById('lang-toggle');
     const body = document.body;
 
-    langBtn.addEventListener('click', () => {
-        if (body.classList.contains('lang-en')) {
-            body.classList.replace('lang-en', 'lang-vi');
-            langBtn.innerText = "MODE: VI";
-        } else {
-            body.classList.replace('lang-vi', 'lang-en');
-            langBtn.innerText = "MODE: EN";
-        }
-        // System flash effect
-        body.style.opacity = "0.7";
-        setTimeout(() => body.style.opacity = "1", 50);
-        
-        // Gõ lại slogan khi đổi ngôn ngữ
-        typeWriterEffect();
-    });
+    if (langBtn) {
+        langBtn.addEventListener('click', () => {
+            if (body.classList.contains('lang-en')) {
+                body.classList.replace('lang-en', 'lang-vi');
+                langBtn.innerText = "MODE: VI";
+            } else {
+                body.classList.replace('lang-vi', 'lang-en');
+                langBtn.innerText = "MODE: EN";
+            }
+            // System flash effect
+            body.style.opacity = "0.7";
+            setTimeout(() => body.style.opacity = "1", 50);
+            
+            // Retype slogan on change
+            typeWriterEffect();
+        });
+    }
 
-    // --- 3. MOUSE GLOW FOLLOWER ---
+    // --- C. UI INTERACTION (Mouse & Scroll) ---
     const glow = document.getElementById('cursor-glow');
-    document.addEventListener('mousemove', (e) => {
-        glow.style.left = e.clientX + 'px';
-        glow.style.top = e.clientY + 'px';
-    });
+    if (glow) {
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = e.clientX + 'px';
+            glow.style.top = e.clientY + 'px';
+        });
+    }
 
-    // --- 4. SCROLL REVEAL ANIMATION ---
     const hiddenElements = document.querySelectorAll('.hidden-section');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -82,70 +122,65 @@ document.addEventListener('DOMContentLoaded', () => {
 
     hiddenElements.forEach((el) => observer.observe(el));
 
-    // --- 5. FIXED: TYPEWRITER EFFECT (LOGIC MỚI) ---
-    // Khai báo biến toàn cục để kiểm soát timeout
-    let typingTimeout; 
+    // --- D. AUDIO EFFECTS ---
+    // Attach sounds to all buttons, links, and report rows
+    const interactiveElements = document.querySelectorAll('button, a, .report-row');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => playSound('hover'));
+        el.addEventListener('click', () => playSound('click'));
+    });
 
-    function typeWriterEffect() {
-        const sloganElement = document.getElementById('slogan-text');
+    // --- E. SYSTEM MONITORING ---
+    updateSystemStats();
+    setInterval(updateSystemStats, 1000);
+
+    // --- F. CHEAT CODE LISTENER (WASD) ---
+    const cheatCode = ['w', 'w', 'a', 'a', 's', 's', 'd', 'd'];
+    let cheatProgress = 0;
+
+    document.addEventListener('keydown', (e) => {
+        const key = e.key.toLowerCase();
         
-        if (!sloganElement) return;
-        
-        const isEnglish = document.body.classList.contains('lang-en');
-        
-        // Nội dung slogan
-        const textVi = '"Không có đường tắt nào dẫn đến thành công."';
-        const textEn = '"There\'s no shortcut to success."';
-        
-        const textToType = isEnglish ? textEn : textVi;
-        
-        // 1. Dừng ngay lập tức việc gõ cũ nếu có (Fix lỗi dính chữ)
-        if (typingTimeout) clearTimeout(typingTimeout);
-        
-        // 2. Xóa sạch chữ cũ
-        sloganElement.innerText = '';
-        
-        // 3. Chạy hàm đệ quy mới
-        let i = 0;
-        function type() {
-            if (i < textToType.length) {
-                sloganElement.innerText += textToType.charAt(i);
-                i++;
-                // Gán timeout vào biến toàn cục để có thể clear sau này
-                typingTimeout = setTimeout(type, 50); 
+        if (key === cheatCode[cheatProgress]) {
+            cheatProgress++;
+            if (cheatProgress === cheatCode.length) {
+                activateGodMode();
+                cheatProgress = 0; 
             }
+        } else {
+            cheatProgress = 0; 
         }
+    });
+
+    // --- G. MATRIX INITIALIZATION ---
+    // Initialize Canvas here to ensure DOM element exists
+    canvas = document.getElementById('matrix-bg');
+    if (canvas) {
+        ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        columns = canvas.width / fontSize;
+        drops = [];
+        for(let x = 0; x < columns; x++) drops[x] = 1;
         
-        type();
+        // Handle Resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            columns = canvas.width / fontSize;
+            drops = []; // Reset drops on resize
+            for(let x = 0; x < columns; x++) drops[x] = 1;
+        });
     }
 });
 
-// --- 6. REPORT PAGE LOGIC (TOGGLE DETAILS) ---
-function toggleDetail(element) {
-    // 1. Toggle class active cho dòng được click
-    element.classList.toggle('active');
+/* ==========================================================================
+   3. FEATURE LOGIC & HELPERS
+   ========================================================================== */
 
-    // 2. Tìm dòng detail ngay phía sau nó
-    const detailRow = element.nextElementSibling;
-
-    if (detailRow.style.maxHeight) {
-        // Nếu đang mở thì đóng lại
-        detailRow.style.maxHeight = null;
-    } else {
-        // Nếu đang đóng thì mở ra (gán chiều cao bằng chiều cao nội dung)
-        detailRow.style.maxHeight = detailRow.scrollHeight + "px";
-    }
-}
-/* =========================================
-   ADD THIS TO THE BOTTOM OF YOUR SCRIPT.JS
-   ========================================= */
-
-// --- FEATURE 2: GENERATED SOUND EFFECTS (No files needed) ---
-// We use the Web Audio API to create beeps so you don't need .mp3 files
-const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
+// --- SOUND GENERATOR ---
 function playSound(type) {
-    if (audioCtx.state === 'suspended') audioCtx.resume(); // Wake up audio engine
+    if (audioCtx.state === 'suspended') audioCtx.resume();
     
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
@@ -154,7 +189,6 @@ function playSound(type) {
     gainNode.connect(audioCtx.destination);
     
     if (type === 'hover') {
-        // High pitched short blip
         osc.type = 'sine';
         osc.frequency.setValueAtTime(800, audioCtx.currentTime);
         osc.frequency.exponentialRampToValueAtTime(1200, audioCtx.currentTime + 0.05);
@@ -163,7 +197,6 @@ function playSound(type) {
         osc.start();
         osc.stop(audioCtx.currentTime + 0.05);
     } else if (type === 'click') {
-        // Lower mechanical "clack"
         osc.type = 'square';
         osc.frequency.setValueAtTime(150, audioCtx.currentTime);
         gainNode.gain.setValueAtTime(0.1, audioCtx.currentTime);
@@ -173,36 +206,62 @@ function playSound(type) {
     }
 }
 
-// Attach sounds to all buttons and links
-const interactiveElements = document.querySelectorAll('button, a, .report-row');
-interactiveElements.forEach(el => {
-    el.addEventListener('mouseenter', () => playSound('hover'));
-    el.addEventListener('click', () => playSound('click'));
-});
-
-
-// --- FEATURE 3: WASD KONAMI CODE ---
-// Sequence: W, W, S, S, A, D, A, D, B, A
-const cheatCode = ['w', 'w', 'a', 'a', 's', 's', 'd', 'd'];
-let cheatProgress = 0;
-
-document.addEventListener('keydown', (e) => {
-    const key = e.key.toLowerCase();
+// --- TYPEWRITER EFFECT ---
+function typeWriterEffect() {
+    const sloganElement = document.getElementById('slogan-text');
+    if (!sloganElement) return;
     
-    // Check if key matches the next required key in sequence
-    if (key === cheatCode[cheatProgress]) {
-        cheatProgress++;
-        
-        // If complete
-        if (cheatProgress === cheatCode.length) {
-            activateGodMode();
-            cheatProgress = 0; // Reset
+    const isEnglish = document.body.classList.contains('lang-en');
+    const textVi = '"Không có đường tắt nào dẫn đến thành công."';
+    const textEn = '"There\'s no shortcut to success."';
+    const textToType = isEnglish ? textEn : textVi;
+    
+    if (typingTimeout) clearTimeout(typingTimeout);
+    
+    sloganElement.innerText = '';
+    
+    let i = 0;
+    function type() {
+        if (i < textToType.length) {
+            sloganElement.innerText += textToType.charAt(i);
+            i++;
+            typingTimeout = setTimeout(type, 50); 
         }
-    } else {
-        cheatProgress = 0; // Reset if wrong key
     }
-});
+    type();
+}
 
+// --- SYSTEM STATS ---
+function updateSystemStats() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', { hour12: false });
+    const timeEl = document.getElementById('sys-time');
+    if(timeEl) timeEl.innerText = `TIME: ${timeString}`;
+
+    if ('getBattery' in navigator) {
+        navigator.getBattery().then(battery => {
+            const level = Math.floor(battery.level * 100);
+            const charging = battery.charging ? "[CHG]" : "[BAT]";
+            
+            const batEl = document.getElementById('sys-battery');
+            if(batEl) {
+                batEl.innerText = `PWR: ${level}% ${charging}`;
+                if(level < 20 && !battery.charging) {
+                    batEl.style.color = 'red';
+                    batEl.classList.add('status-blink');
+                } else {
+                    batEl.style.color = ''; 
+                    batEl.classList.remove('status-blink');
+                }
+            }
+        });
+    } else {
+        const batEl = document.getElementById('sys-battery');
+        if(batEl) batEl.innerText = "PWR: EXTERNAL";
+    }
+}
+
+// --- GOD MODE (MATRIX TRIGGER) ---
 function activateGodMode() {
     playSound('click'); 
     document.body.classList.toggle('god-mode'); 
@@ -216,85 +275,32 @@ function activateGodMode() {
         
         // START THE RAIN
         if(matrixInterval) clearInterval(matrixInterval);
-        matrixInterval = setInterval(drawMatrix, 50);
+        if(canvas && ctx) matrixInterval = setInterval(drawMatrix, 50);
 
     } else {
         if(cmdLine) cmdLine.innerText = ">> USER_MODE_RESTORED";
         
         // STOP THE RAIN
         clearInterval(matrixInterval);
-        ctx.clearRect(0,0,canvas.width, canvas.height); // Clear screen
+        if(canvas && ctx) ctx.clearRect(0,0,canvas.width, canvas.height);
     }
 }
 
-
-// --- FEATURE 4: LIVE SYSTEM STATS ---
-function updateSystemStats() {
-    // 1. Time Update
-    const now = new Date();
-    const timeString = now.toLocaleTimeString('en-US', { hour12: false });
-    document.getElementById('sys-time').innerText = `TIME: ${timeString}`;
-
-    // 2. Battery Update (Check if API is supported)
-    if ('getBattery' in navigator) {
-        navigator.getBattery().then(battery => {
-            const level = Math.floor(battery.level * 100);
-            const charging = battery.charging ? "[CHG]" : "[BAT]";
-            
-            // Color logic: Red if low, normal if high
-            const batEl = document.getElementById('sys-battery');
-            batEl.innerText = `PWR: ${level}% ${charging}`;
-            
-            if(level < 20 && !battery.charging) {
-                batEl.style.color = 'red';
-                batEl.classList.add('status-blink');
-            } else {
-                batEl.style.color = ''; // Reset
-                batEl.classList.remove('status-blink');
-            }
-        });
-    } else {
-        document.getElementById('sys-battery').innerText = "PWR: EXTERNAL";
-    }
-}
-
-// Run immediately and then every second
-updateSystemStats();
-setInterval(updateSystemStats, 1000);
-
-/* --- MATRIX RAIN LOGIC --- */
-const canvas = document.getElementById('matrix-bg');
-const ctx = canvas.getContext('2d');
-
-// Set canvas size
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// Characters to rain down (Binary + Katakana + Hacker text)
-const matrixChars = "010101XYZ<>/\\|ELAX_DEV";
-const fontSize = 14;
-const columns = canvas.width / fontSize;
-const drops = [];
-
-// Initialize drops
-for(let x = 0; x < columns; x++) drops[x] = 1;
-
-let matrixInterval;
-
+// --- MATRIX DRAW LOOP ---
 function drawMatrix() {
-    // Semi-transparent black to create "trail" effect
+    if (!ctx || !canvas) return;
+
+    // Semi-transparent black trail
     ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // Set text color (Cyan for God Mode)
-    ctx.fillStyle = "#00ffff"; 
+    ctx.fillStyle = "#00ffff"; // Cyan color
     ctx.font = fontSize + "px monospace";
 
     for(let i = 0; i < drops.length; i++) {
         const text = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
         ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-        // Reset drop to top randomly
         if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
             drops[i] = 0;
         }

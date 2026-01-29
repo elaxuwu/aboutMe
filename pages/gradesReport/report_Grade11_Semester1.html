@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACADEMIC_LOGS_HK1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="lang-en">
+
+    <div id="cursor-glow"></div>
+    <div class="crt-vignette"></div>
+
+    <div id="boot-loader">
+        <div class="boot-container">
+            <div class="boot-header">ELAX_SECURE_SERVER v1.0</div>
+            <div id="boot-log" class="boot-log"></div>
+            <div class="boot-progress-wrapper">
+                <span class="boot-label">DECRYPTING_DATA:</span>
+                <div class="boot-progress-bar">
+                    <div id="boot-fill"></div>
+                </div>
+                <span id="boot-percent">0%</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="scanlines"></div>
+
+    <nav class="system-nav">
+        <a href="index.html" class="logo" style="text-decoration: none; color: var(--text);">
+            << RETURN_ROOT
+        </a>
+        <div class="nav-controls">
+            <span class="system-status">SECURE_MODE</span>
+            <button id="lang-toggle" class="cmd-btn">MODE: EN</button>
+        </div>
+    </nav>
+
+    <main class="terminal-container">
+        <section class="console-block hero">
+            <div class="cmd-line">>> ACCESS FILE: academic_report_hk1.dat</div>
+            <h1 class="glitch-text" data-text="PARENT MEETING 1:1">
+                <span class="content-vi">HỌP PHỤ HUYNH 1:1</span>
+                <span class="content-en">1:1 PARENT MEETING</span>
+            </h1>
+            
+            <div class="slogan-box">
+                <span style="color: var(--accent);">TARGET:</span>&nbsp;
+                <span class="content-vi">Kết quả học tập Học Kỳ 1</span>
+                <span class="content-en">Semester 1 Academic Results</span>
+            </div>
+        </section>
+
+        <section class="console-block hidden-section">
+            <div class="cmd-line">>> RENDER TABLE --verbose</div>
+            
+            <div class="report-container">
+                <section class="console-block hidden-section">
+    <div class="cmd-line">>> LOAD FILE: mission_plan_hk1.txt</div>
+    <div class="project-brutal-card" style="border-color: var(--text); margin-bottom: 30px;">
+        <div class="project-header">
+            <span class="status-dot" style="background: var(--text);"></span> 
+            <span class="content-vi">I. KẾ HOẠCH HỌC TẬP & RÈN LUYỆN</span>
+            <span class="content-en">I. STUDY & TRAINING PLAN</span>
+        </div>
+        <div class="project-desc" style="width: 100%; flex: none; background: rgba(0,255,65,0.02);">
+            <ul style="list-style: none; padding-left: 0; font-family: var(--font-mono);">
+                <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                    <span style="color: var(--accent); margin-right: 10px;">[TARGET_01]</span>
+                    <div>
+                        <strong class="content-vi">Duy trì phong độ học tập:</strong>
+                        <strong class="content-en">Maintain Academic Performance:</strong>
+                        <br>
+                        <span class="content-vi" style="opacity: 0.8;">>> Mục tiêu GPA cả năm > 9.0. Giữ vững điểm 10 môn chuyên ngành.</span>
+                        <span class="content-en" style="opacity: 0.8;">>> Target GPA > 9.0. Keep perfect score in major subjects.</span>
+                    </div>
+                </li>
+                <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                    <span style="color: var(--accent); margin-right: 10px;">[TARGET_02]</span>
+                    <div>
+                        <strong class="content-vi">Phát triển kỹ năng mềm:</strong>
+                        <strong class="content-en">Soft Skills Development:</strong>
+                        <br>
+                        <span class="content-vi" style="opacity: 0.8;">>> Cải thiện kỹ năng quản lý thời gian (Time Management) & Lãnh đạo nhóm (Leadership).</span>
+                        <span class="content-en" style="opacity: 0.8;">>> Improve Time Management & Team Leadership.</span>
+                    </div>
+                </li>
+                <li style="margin-bottom: 10px; display: flex; align-items: flex-start;">
+                    <span style="color: var(--accent); margin-right: 10px;">[TARGET_03]</span>
+                    <div>
+                        <strong class="content-vi">Dự án cá nhân:</strong>
+                        <strong class="content-en">Personal Projects:</strong>
+                        <br>
+                        <span class="content-vi" style="opacity: 0.8;">>> Hoàn thành 1 Game/App nhỏ và publish lên Github.</span>
+                        <span class="content-en" style="opacity: 0.8;">>> Finish 1 mini Game/App & publish to Github.</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+                </section>
+                
+    <div class="report-header">
+        <div class="col">SUBJECT (CLICK TO EXPAND)</div>
+        <div class="col">AVG_SCORE</div>
+        <div class="col">STATUS</div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> TOÁN (MATH)</div>
+        <div class="col text-highlight">8.8</div>
+        <div class="col">GIỎI (EXCELLENT)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.5</div>
+            <div class="d-item">TX2: 9.0</div>
+            <div class="d-item">TX3: 7.5</div>
+            <div class="d-item">TX4: 7.6</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.5</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> VẬT LÝ (PHYSICS)</div>
+        <div class="col text-highlight">8.2</div>
+        <div class="col">KHÁ (GOOD)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.0</div>
+            <div class="d-item">TX2: 7.0</div>
+            <div class="d-item">TX3: 8.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 7.3</div>
+            <div class="d-item highlight">CUỐI KỲ: 9.1</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> HÓA HỌC (CHEMISTRY)</div>
+        <div class="col text-highlight">9.7</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 9.3</div>
+            <div class="d-item highlight">CUỐI KỲ: 10.0</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> SINH HỌC (BIOLOGY)</div>
+        <div class="col text-highlight">9.1</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 9.0</div>
+            <div class="d-item">TX2: 9.2</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.3</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> CÔNG NGHỆ TT (IT)</div>
+        <div class="col text-highlight">9.1</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 8.3</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 9.2</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.8</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> NGỮ VĂN (LITERATURE)</div>
+        <div class="col text-highlight">7.9</div>
+        <div class="col">KHÁ (GOOD)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 7.5</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 7.5</div>
+            <div class="d-item">TX4: 8.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 8.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 7.5</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)" style="border-left: 3px solid var(--accent);">
+        <div class="col"><span class="expand-icon">[+]</span> LỊCH SỬ (HISTORY)</div>
+        <div class="col text-highlight" style="color: var(--accent);">10.0</div>
+        <div class="col" style="color: var(--accent);">PERFECT SCORE</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 10.0</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> TIẾNG ANH (ENGLISH)</div>
+        <div class="col text-highlight">9.0</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 9.2</div>
+            <div class="d-item">TX3: 8.9</div>
+            <div class="d-item">TX4: 9.4</div>
+            <div class="d-item highlight">PROG.TEST: 8.8</div>
+            <div class="d-item highlight">CUỐI KỲ: 8.5</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> KH. MÁY TÍNH (CS)</div>
+        <div class="col text-highlight">9.6</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item">TX3: 9.5</div>
+            <div class="d-item highlight">GIỮA KỲ: 9.4</div>
+            <div class="d-item highlight">CUỐI KỲ: 9.5</div>
+        </div>
+    </div>
+    
+     <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> GDQP - AN NINH</div>
+        <div class="col text-highlight">9.6</div>
+        <div class="col">XUẤT SẮC</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">TX1: 10.0</div>
+            <div class="d-item">TX2: 10.0</div>
+            <div class="d-item highlight">GIỮA KỲ: 10.0</div>
+            <div class="d-item highlight">CUỐI KỲ: 9.0</div>
+        </div>
+    </div>
+
+    <div class="report-row" onclick="toggleDetail(this)">
+        <div class="col"><span class="expand-icon">[+]</span> CÁC MÔN KHÁC (OTHERS)</div>
+        <div class="col">--</div>
+        <div class="col">ĐẠT (PASSED)</div>
+    </div>
+    <div class="detail-row">
+        <div class="detail-grid">
+            <div class="d-item">THỂ CHẤT: ĐẠT</div>
+            <div class="d-item">GD ĐỊA PHƯƠNG: ĐẠT</div>
+            <div class="d-item">TRẢI NGHIỆM: ĐẠT</div>
+        </div>
+    </div>
+
+</div>
+
+<div class="teacher-notes hidden-section">
+    <h3 class="cmd-line">>> DECRYPTING: teacher_comments.txt</h3>
+    <div class="note-box">
+        <p style="margin-bottom: 10px; color: var(--accent);">[GVCN_LOG]:</p>
+        <p class="typewriter-text">
+            "Thiên Bảo là một học sinh thông minh, hòa đồng. Em luôn chủ động tích cực tham gia vào các hoạt động. Em thể hiện quyết tâm phấn đấu để có được kết quả học tập xuất sắc trong hầu hết các môn học. Em làm việc nhóm hiệu quả và có nhiều đóng góp giá trị..."
+        </p>
+        <br>
+        <p style="color: var(--text); border-top: 1px dashed var(--text); padding-top:10px;">
+            >> ĐIỂM RÈN LUYỆN (VĂN MINH): <span style="color: var(--accent); font-weight: bold; font-size: 1.2rem;">99/100</span>
+        </p>
+    </div>
+</div>
+            
+
+            <div class="teacher-notes hidden-section">
+                <h3 class="cmd-line">>> CAT teacher_notes.txt</h3>
+                <div class="note-box">
+                    <span class="cursor">_</span>
+                </div>
+            </div>
+        </section>
+        <section class="console-block hidden-section" style="margin-top: 50px;">
+    <div class="cmd-line">>> RUN DIAGNOSTIC: system_challenges_&_wishes.exe</div>
+    
+    <div class="brutal-grid" style="border: none; grid-gap: 20px;">
+        
+        <div class="skill-box" style="border: 1px dashed var(--accent); background: rgba(255, 0, 60, 0.05);">
+            <span class="code-num" style="color: var(--accent);">ERR_LOGS</span>
+            <h3 class="content-vi" style="color: var(--accent); margin-bottom: 15px;">⚠️ KHÓ KHĂN (CHALLENGES)</h3>
+            <h3 class="content-en" style="color: var(--accent); margin-bottom: 15px;">⚠️ CHALLENGES</h3>
+            
+            <p class="content-vi" style="margin-bottom: 10px;">
+                > <span style="color: #fff;">Quản lý thời gian:</span> Khối lượng bài tập các môn tự nhiên khá lớn, đôi khi gây quá tải CPU (Brain).
+            </p>
+            <p class="content-en" style="margin-bottom: 10px;">
+                > <span style="color: #fff;">Time Management:</span> Heavy workload in science subjects causes occasional CPU (Brain) overload.
+            </p>
+
+            <p class="content-vi">
+                > <span style="color: #fff;">Cân bằng:</span> Đôi khi mải mê code game mà quên mất thời gian nghỉ ngơi.
+            </p>
+            <p class="content-en">
+                > <span style="color: #fff;">Balance:</span> Sometimes get too absorbed in coding games and forget to rest.
+            </p>
+        </div>
+
+        <div class="skill-box highlight" style="border: 1px solid var(--text);">
+            <span class="code-num">FEATURE_REQ</span>
+            <h3 class="content-vi" style="color: var(--text); margin-bottom: 15px;">✨ MONG MUỐN (WISH LIST)</h3>
+            <h3 class="content-en" style="color: var(--text); margin-bottom: 15px;">✨ WISH LIST</h3>
+            
+            <p class="content-vi" style="margin-bottom: 10px;">
+                > <span style="color: #fff;">Gia đình:</span> Tiếp tục ủng hộ con theo đuổi ngành Lập trình/Game Dev.
+            </p>
+            <p class="content-en" style="margin-bottom: 10px;">
+                > <span style="color: #fff;">Family:</span> Continue supporting my path in Programming/Game Dev.
+            </p>
+
+            <p class="content-vi">
+                > <span style="color: #fff;">Đầu tư:</span> (Optional) Cân nhắc nâng cấp "phần cứng" (Laptop/PC) để chạy các Engine nặng hơn ^^.
+            </p>
+            <p class="content-en">
+                > <span style="color: #fff;">Investment:</span> (Optional) Consider hardware upgrade (Laptop/PC) for heavier Engines ^^.
+            </p>
+        </div>
+    </div>
+        </section>
+        
+    </main>
+
+    <footer class="system-footer">
+        <p>[END_OF_FILE]</p>
+        <p>ENCRYPTED_BY: ELAX_OS // 2026</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,3 +1,6 @@
+/* ==========================================================================
+   1. CORE CONFIGURATION & BASE STYLES
+   ========================================================================== */
 :root {
     --bg: #050505;
     --text: #00ff41; 
@@ -13,14 +16,21 @@ body {
     color: var(--text);
     font-family: var(--font-mono);
     line-height: 1.6;
-    cursor: crosshair; /* Đổi con trỏ chuột thành hình dấu cộng */
+    cursor: crosshair; /* Default cursor */
     overflow-x: hidden;
 }
 
-/* NEW: Mouse Glow Effect */
+/* Language Visibility Logic */
+body.lang-vi .content-en { display: none; }
+body.lang-en .content-vi { display: none; }
+
+/* ==========================================================================
+   2. GLOBAL VISUAL EFFECTS (Overlays & Mouse)
+   ========================================================================== */
+
+/* Mouse Glow Effect */
 #cursor-glow {
-    position: fixed;
-    top: 0; left: 0;
+    position: fixed; top: 0; left: 0;
     width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(0, 255, 65, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
     pointer-events: none;
@@ -29,7 +39,7 @@ body {
     mix-blend-mode: screen;
 }
 
-/* NEW: CRT Vignette (Tối 4 góc) */
+/* CRT Vignette (Dark corners) */
 .crt-vignette {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%);
@@ -45,7 +55,9 @@ body {
     z-index: 9999; pointer-events: none;
 }
 
-/* Boot Loader */
+/* ==========================================================================
+   3. BOOT LOADER SEQUENCE
+   ========================================================================== */
 #boot-loader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background: var(--bg); z-index: 100000;
@@ -58,7 +70,9 @@ body {
 #boot-fill { height: 100%; width: 0%; background: var(--text); }
 .loaded-complete { opacity: 0; pointer-events: none; transition: 0.8s ease; }
 
-/* Navigation */
+/* ==========================================================================
+   4. LAYOUT & NAVIGATION
+   ========================================================================== */
 .system-nav {
     display: flex; justify-content: space-between; padding: 20px;
     border-bottom: 2px solid var(--text); position: sticky; top: 0; background: var(--bg); z-index: 100;
@@ -66,28 +80,27 @@ body {
 .cmd-btn { background: var(--text); color: var(--bg); border: none; padding: 5px 12px; cursor: pointer; font-weight: bold; font-family: var(--font-mono); }
 .cmd-btn:hover { background: var(--accent); color: #fff; }
 
-/* Main Container */
 .terminal-container { max-width: 1100px; margin: 0 auto; padding: 60px 20px; }
 .console-block { margin-bottom: 80px; }
 .cmd-line { color: var(--accent); font-weight: bold; margin-bottom: 20px; }
 
-/* NEW: Scroll Reveal Animation Class */
-.hidden-section {
-    opacity: 0;
-    transform: translateY(30px);
-    transition: all 0.8s ease-out;
-}
-.show-section {
-    opacity: 1;
-    transform: translateY(0);
-}
+.system-footer { text-align: center; padding: 40px; border-top: 1px solid #222; font-size: 0.8rem; opacity: 0.6; }
 
-/* Hero Glitch Effect */
+/* Scroll Reveal Animation */
+.hidden-section { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+.show-section { opacity: 1; transform: translateY(0); }
+
+/* ==========================================================================
+   5. TYPOGRAPHY & TEXT EFFECTS
+   ========================================================================== */
 h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); position: relative; text-shadow: 2px 2px 0px rgba(0, 255, 65, 0.3); }
+
+/* Glitch Effect */
 .glitch-text::before, .glitch-text::after {
     content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.8;
 }
 .glitch-text:hover::before { animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite; color: var(--accent); z-index: -1; }
+
 @keyframes glitch {
     0% { transform: translate(0); }
     20% { transform: translate(-3px, 3px); }
@@ -97,36 +110,67 @@ h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); position: relative; text-shadow: 2px
     100% { transform: translate(0); }
 }
 
-/* FIXED: Slogan Box & Cursor */
+/* Slogan & Cursor */
 .slogan-box {
-    font-size: 1.2rem;
-    min-height: 1.6em; /* Giữ chiều cao cố định */
-    color: #fff;
-    opacity: 0.9;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
+    font-size: 1.2rem; min-height: 1.6em; color: #fff; opacity: 0.9;
+    margin-bottom: 20px; display: flex; align-items: center;
+}
+#slogan-text { white-space: pre-wrap; }
+
+.cursor { display: inline-block; color: var(--accent); animation: blink 1s step-end infinite; margin-left: 5px; font-weight: bold; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* ==========================================================================
+   6. HERO SECTION & AVATAR
+   ========================================================================== */
+.hero-layout {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-top: 15px; width: 100%;
 }
 
-.cursor {
-    display: inline-block;
-    color: var(--accent);
-    animation: blink 1s step-end infinite;
-    margin-left: 5px;
-    font-weight: bold;
+.hero-avatar-wrapper { flex-shrink: 0; margin-top: 5px; }
+
+.avatar-frame {
+    width: 200px; height: 200px;
+    border: 1px solid var(--text); padding: 2px;
+    position: relative; overflow: hidden;
+    background: rgba(0, 255, 65, 0.05);
 }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
+.avatar-img {
+    width: 100%; height: 100%; object-fit: cover;
+    filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(400%) contrast(1.1);
+    mix-blend-mode: screen;
 }
 
-/* Skills Grid */
+.avatar-scanline {
+    position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+    background: var(--text); box-shadow: 0 0 5px var(--text);
+    animation: scanFace 2.5s linear infinite;
+}
+
+.avatar-caption { margin-top: 4px; font-size: 0.55rem; color: var(--accent); opacity: 0.8; }
+
+@keyframes scanFace {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .hero-layout { flex-direction: row; align-items: flex-start; text-align: left; }
+    .avatar-frame { width: 70px; height: 70px; }
+}
+
+/* ==========================================================================
+   7. STANDARD COMPONENTS (Skills, Projects, Contact)
+   ========================================================================== */
+/* Skills */
 .brutal-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); border: 1px solid var(--text); }
 .skill-box { padding: 25px; border: 1px solid var(--text); transition: 0.3s; position: relative; overflow: hidden; }
 .skill-box:hover { background: var(--text); color: var(--bg); }
 .skill-box.highlight { border: 2px solid var(--accent); color: var(--accent); }
-/* Hover effect line */
 .skill-box::before {
     content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
@@ -135,7 +179,7 @@ h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); position: relative; text-shadow: 2px
 .skill-box:hover::before { left: 100%; }
 .code-num { font-size: 0.7rem; display: block; margin-bottom: 5px; opacity: 0.7; }
 
-/* Project Card */
+/* Projects */
 .project-brutal-card { border: 2px solid var(--text); transition: transform 0.3s; }
 .project-brutal-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0, 255, 65, 0.1); }
 .project-header { background: var(--text); color: var(--bg); padding: 8px 15px; font-weight: bold; }
@@ -144,8 +188,16 @@ h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); position: relative; text-shadow: 2px
 .project-img-wrapper:hover { filter: grayscale(0); }
 .project-img-wrapper img { width: 100%; height: auto; display: block; }
 .project-desc { flex: 1 1 300px; padding: 25px; }
-.launch-btn { display: block; text-align: center; padding: 15px; border: 2px solid var(--text); color: var(--text); text-decoration: none; margin-top: 20px; font-weight: bold; transition: 0.2s; }
+.launch-btn { 
+    display: block; text-align: center; padding: 15px; border: 2px solid var(--text); 
+    color: var(--text); text-decoration: none; margin-top: 20px; 
+    font-weight: bold; transition: 0.2s; 
+}
 .launch-btn:hover { background: var(--text); color: var(--bg); box-shadow: 0 0 15px var(--text); }
+
+@media (max-width: 768px) {
+    .project-img-wrapper { border-right: none; border-bottom: 1px solid var(--text); }
+}
 
 /* Contact */
 .contact-terminal { border: 1px dashed var(--text); padding: 25px; background: rgba(0,255,65,0.03); }
@@ -154,329 +206,117 @@ h1 { font-size: clamp(1.8rem, 6vw, 3.5rem); position: relative; text-shadow: 2px
 .value { color: var(--text); text-decoration: none; position: relative; }
 .value::after { content: '_'; animation: blink 1s infinite; opacity: 0; }
 .contact-row:hover .value::after { opacity: 1; }
-.status-blink { animation: blink 1s step-end infinite; }
-@keyframes blink { 50% { opacity: 0; } }
 
-/* Footer */
-.system-footer { text-align: center; padding: 40px; border-top: 1px solid #222; font-size: 0.8rem; opacity: 0.6; }
-
-/* Lang Logic */
-body.lang-vi .content-en { display: none; }
-body.lang-en .content-vi { display: none; }
-
-@media (max-width: 768px) {
-    .project-img-wrapper { border-right: none; border-bottom: 1px solid var(--text); }
-}
-
-/* --- ADDITION FOR REPORT PAGE --- */
-
+/* ==========================================================================
+   8. PAGE: REPORT & GRADES
+   ========================================================================== */
 .report-container {
-    border: 1px solid var(--text);
-    padding: 10px;
-    font-family: var(--font-mono);
-    margin-bottom: 40px;
-    background: rgba(0, 255, 65, 0.02);
+    border: 1px solid var(--text); padding: 10px; font-family: var(--font-mono);
+    margin-bottom: 40px; background: rgba(0, 255, 65, 0.02);
 }
 
 .report-header {
-    display: grid;
-    grid-template-columns: 2fr 1fr 2fr; /* Chia cột: Tên môn - Điểm - Đánh giá */
-    border-bottom: 2px solid var(--text);
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: var(--accent);
+    display: grid; grid-template-columns: 2fr 1fr 2fr;
+    border-bottom: 2px solid var(--text); padding-bottom: 10px; margin-bottom: 10px;
+    font-weight: bold; color: var(--accent);
 }
 
 .report-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr 2fr;
-    padding: 8px 0;
-    border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
-    transition: 0.2s;
+    display: grid; grid-template-columns: 2fr 1fr 2fr;
+    padding: 8px 0; border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
+    transition: 0.2s; cursor: pointer; user-select: none; position: relative;
 }
 
-.report-row:hover {
-    background: var(--text);
-    color: var(--bg);
-    cursor: default;
-}
+.report-row:hover { background: rgba(0, 255, 65, 0.1); padding-left: 10px; }
+.report-row.active { background: rgba(0, 255, 65, 0.15); color: #fff; }
 
-.note-box {
-    border: 1px solid var(--accent);
-    padding: 20px;
-    color: #fff;
-    min-height: 100px;
-    background: rgba(255, 0, 60, 0.05);
-}
+.text-highlight { color: #fff; font-weight: bold; text-shadow: 0 0 5px var(--text); }
 
-/* Responsive cho bảng trên mobile */
-@media (max-width: 600px) {
-    .report-header, .report-row {
-        grid-template-columns: 1fr 1fr; /* Ẩn cột đánh giá hoặc gộp */
-        font-size: 0.8rem;
-    }
-    .report-header .col:nth-child(3), 
-    .report-row .col:nth-child(3) {
-        display: none; /* Tạm ẩn cột đánh giá trên mobile nếu chật */
-    }
-}
-
-/* --- UPDATES FOR REPORT DETAILS --- */
-
-.report-row {
-    cursor: pointer;
-    user-select: none;
-    position: relative;
-}
-
-/* Hiệu ứng khi hover vào dòng môn học */
-.report-row:hover {
-    background: rgba(0, 255, 65, 0.1);
-    padding-left: 10px; /* Nhảy nhẹ sang phải */
-}
-
-.text-highlight {
-    color: #fff;
-    font-weight: bold;
-    text-shadow: 0 0 5px var(--text);
-}
-
-/* Row chi tiết (Mặc định ẩn) */
+/* Detail Accordion */
 .detail-row {
-    max-height: 0;
-    overflow: hidden;
+    max-height: 0; overflow: hidden;
     transition: max-height 0.3s ease-out, background 0.3s;
-    background: rgba(0, 0, 0, 0.3);
-    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
+    background: rgba(0, 0, 0, 0.3); border-bottom: 1px solid rgba(0, 255, 65, 0.1);
 }
-
-/* Grid hiển thị điểm thành phần */
 .detail-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
-    padding: 15px 20px;
-    font-size: 0.85rem;
-    color: #bbb;
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px; padding: 15px 20px; font-size: 0.85rem; color: #bbb;
 }
+.d-item { border-left: 2px solid var(--text); padding-left: 8px; }
+.d-item.highlight { color: var(--accent); border-left: 2px solid var(--accent); font-weight: bold; }
 
-.d-item {
-    border-left: 2px solid var(--text);
-    padding-left: 8px;
-}
+.expand-icon { display: inline-block; width: 20px; margin-right: 5px; transition: transform 0.3s; color: var(--accent); }
+.report-row.active .expand-icon { transform: rotate(90deg); }
 
-.d-item.highlight {
-    color: var(--accent);
-    border-left: 2px solid var(--accent);
-    font-weight: bold;
-}
+.note-box { border: 1px solid var(--accent); padding: 20px; color: #fff; min-height: 100px; background: rgba(255, 0, 60, 0.05); }
 
-/* Icon dấu [+] xoay khi mở */
-.expand-icon {
-    display: inline-block;
-    width: 20px;
-    margin-right: 5px;
-    transition: transform 0.3s;
-    color: var(--accent);
-}
-
-/* Class active được thêm vào bằng JS */
-.report-row.active .expand-icon {
-    transform: rotate(90deg);
-}
-
-.report-row.active {
-    background: rgba(0, 255, 65, 0.15);
-    color: #fff;
-}
-
-/* --- ZALO APP PAGE STYLES --- */
-
-.log-container {
-    border: 1px solid var(--text);
-    background: rgba(0, 0, 0, 0.5);
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-}
-
-.log-header {
-    display: grid;
-    grid-template-columns: 120px 100px 1fr;
-    background: var(--text);
-    color: var(--bg);
-    padding: 8px 15px;
-    font-weight: bold;
-    border-bottom: 1px solid var(--text);
-}
-
-.log-entry {
-    display: grid;
-    grid-template-columns: 120px 100px 1fr;
-    padding: 12px 15px;
-    border-bottom: 1px dashed rgba(0, 255, 65, 0.3);
-    transition: 0.2s;
-}
-
-.log-entry:hover {
-    background: rgba(0, 255, 65, 0.05);
-}
-
-.log-ver {
-    color: var(--accent);
-    font-weight: bold;
-}
-
-.tag-new {
-    background: var(--accent);
-    color: #fff;
-    padding: 2px 6px;
-    font-size: 0.7rem;
-    margin-right: 8px;
-    border-radius: 2px;
-}
-
-/* Responsive cho log trên mobile */
 @media (max-width: 600px) {
-    .log-header { display: none; } /* Ẩn header trên mobile cho gọn */
-    .log-entry {
-        grid-template-columns: 1fr;
-        gap: 5px;
-        padding: 15px;
-        border-bottom: 1px solid var(--text);
-    }
+    .report-header, .report-row { grid-template-columns: 1fr 1fr; font-size: 0.8rem; }
+    .report-header .col:nth-child(3), .report-row .col:nth-child(3) { display: none; }
+}
+
+/* ==========================================================================
+   9. PAGE: LOGS / ZALO APP
+   ========================================================================== */
+.log-container {
+    border: 1px solid var(--text); background: rgba(0, 0, 0, 0.5);
+    font-family: var(--font-mono); font-size: 0.85rem;
+}
+.log-header {
+    display: grid; grid-template-columns: 120px 100px 1fr;
+    background: var(--text); color: var(--bg);
+    padding: 8px 15px; font-weight: bold; border-bottom: 1px solid var(--text);
+}
+.log-entry {
+    display: grid; grid-template-columns: 120px 100px 1fr;
+    padding: 12px 15px; border-bottom: 1px dashed rgba(0, 255, 65, 0.3); transition: 0.2s;
+}
+.log-entry:hover { background: rgba(0, 255, 65, 0.05); }
+.log-ver { color: var(--accent); font-weight: bold; }
+.tag-new { background: var(--accent); color: #fff; padding: 2px 6px; font-size: 0.7rem; margin-right: 8px; border-radius: 2px; }
+
+@media (max-width: 600px) {
+    .log-header { display: none; }
+    .log-entry { grid-template-columns: 1fr; gap: 5px; padding: 15px; border-bottom: 1px solid var(--text); }
     .log-date { opacity: 0.7; font-size: 0.75rem; }
 }
 
-/* --- HERO LAYOUT & AVATAR STYLES --- */
+/* ==========================================================================
+   10. SPECIAL FEATURES (God Mode, Matrix, Stats)
+   ========================================================================== */
 
-/* --- COMPACT AVATAR STYLES --- */
-
-/* style.css */
-.hero-layout {
-    display: flex;
-    justify-content: space-between; /* This pushes the Text to the left and Image to the right */
-    align-items: flex-start;
-    margin-top: 15px;
-    width: 100%; /* Ensures the container spans the full width */
-}
-
-.hero-avatar-wrapper {
-    flex-shrink: 0;
-    margin-top: 5px; /* Căn chỉnh cho ngang hàng với dòng tiêu đề */
-}
-
-.avatar-frame {
-    /* SIÊU NHỎ: Chỉ 80px */
-    width: 200px; 
-    height: 200px;
-    border: 1px solid var(--text); /* Viền mảnh hơn cho hợp kích thước */
-    padding: 2px;
-    position: relative;
-    overflow: hidden;
-    background: rgba(0, 255, 65, 0.05);
-}
-
-.avatar-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: grayscale(100%) sepia(100%) hue-rotate(70deg) saturate(400%) contrast(1.1);
-    mix-blend-mode: screen;
-}
-
-/* Tia quét nhỏ hơn */
-.avatar-scanline {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 2px;
-    background: var(--text);
-    box-shadow: 0 0 5px var(--text);
-    animation: scanFace 2.5s linear infinite;
-}
-
-.avatar-caption {
-    margin-top: 4px;
-    font-size: 0.55rem; /* Chữ cực nhỏ */
-    color: var(--accent);
-    opacity: 0.8;
-}
-
-/* Mobile: Giữ nguyên hàng ngang thay vì nhảy dòng để tiết kiệm diện tích */
-@media (max-width: 768px) {
-    .hero-layout {
-        flex-direction: row; /* Vẫn giữ nằm ngang trên mobile */
-        align-items: flex-start;
-        text-align: left;
-    }
-    .avatar-frame {
-        width: 70px;
-        height: 70px;
-    }
-}
-
-/* style.css */
-#slogan-text {
-    white-space: pre-wrap; /* This forces the browser to render every space character */
-}
-
-/* --- NEW: SYSTEM STATS IN FOOTER --- */
-.sys-info-bar {
-    margin-bottom: 10px;
-    font-weight: bold;
-    color: var(--accent);
-    text-shadow: 0 0 5px var(--accent);
-}
+/* System Stats in Footer */
+.sys-info-bar { margin-bottom: 10px; font-weight: bold; color: var(--accent); text-shadow: 0 0 5px var(--accent); }
 .separator { margin: 0 10px; opacity: 0.5; }
+.status-blink { animation: blink 1s step-end infinite; }
 
-/* --- NEW: CHEAT CODE "GOD MODE" --- */
-/* When this class is added to body, colors change */
+/* Matrix Background Canvas */
+#matrix-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1; opacity: 0; transition: opacity 1s ease; pointer-events: none;
+}
+
+/* GOD MODE ACTIVATED STATE */
 body.god-mode {
-    --text: #00ffff;  /* Cyan */
+    --text: #00ffff;   /* Cyan */
     --accent: #ff00ff; /* Magenta */
     background-color: #0a000a;
 }
 
-/* Make the screen shake slightly in God Mode */
-body.god-mode .terminal-container {
-    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-}
-
+/* Screen Shake */
+body.god-mode .terminal-container { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
 @keyframes shake {
     10%, 90% { transform: translate3d(-1px, 0, 0); }
     20%, 80% { transform: translate3d(2px, 0, 0); }
     30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
     40%, 60% { transform: translate3d(4px, 0, 0); }
 }
-@keyframes scanFace {
-    0% { top: 0%; opacity: 0; }
-    10% { opacity: 1; }
-    90% { opacity: 1; }
-    100% { top: 100%; opacity: 0; }
-}
 
-/* --- MATRIX RAIN CANVAS --- */
-#matrix-bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    z-index: -1; /* Sits behind the text */
-    opacity: 0;
-    transition: opacity 1s ease;
-    pointer-events: none;
-}
+/* Reveal Matrix Rain */
+body.god-mode #matrix-bg { opacity: 0.15; }
 
-/* While God Mode is active, show the rain */
-body.god-mode #matrix-bg {
-    opacity: 0.15; /* Subtle enough to read text over it */
-}
-
-/* --- SECRET SECTION --- */
-.god-only-section {
-    display: none; /* Hidden by default */
-}
-
-/* Reveal when God Mode is on */
+/* Reveal Secret Section */
+.god-only-section { display: none; }
 body.god-mode .god-only-section {
     display: block;
     animation: glitchReveal 0.5s ease forwards;
